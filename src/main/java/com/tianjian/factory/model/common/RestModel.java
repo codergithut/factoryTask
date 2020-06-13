@@ -5,20 +5,20 @@ public class RestModel {
 
     private Object data;
 
-    private String message;
+    private String msg;
 
-    public RestModel(String code, String desc, Object data) {
+    public RestModel(String code, Object data, String msg) {
         this.code = code;
-        this.message = desc;
+        this.msg = msg;
         this.data = data;
     }
 
     public RestModel() {
     }
 
-    public RestModel(String code, String desc) {
+    public RestModel(String code, String msg) {
         this.code = code;
-        this.message = desc;
+        this.msg = msg;
     }
 
     public String getCode() {
@@ -37,20 +37,20 @@ public class RestModel {
         this.data = data;
     }
 
-    public String getMessage() {
-        return message;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
     public static RestModel success(Object data) {
         RestModel restModel = null;
         if(data != null) {
-            restModel = new RestModel("000000", "success", data);
+            restModel = new RestModel("0000",  data, "success");
         } else {
-            restModel = new RestModel("000000", "success");
+            restModel = new RestModel("0000", "success");
         }
 
         return restModel;

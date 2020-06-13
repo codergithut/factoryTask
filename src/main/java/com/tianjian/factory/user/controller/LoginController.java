@@ -11,6 +11,8 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,11 +32,11 @@ public class LoginController {
 
     /**
      * 根据openId 获取用户
-     * @param openid
      * @return
      */
     @GetMapping("/getUserByOpenid")
-    public RestModel getUserInfoByOpenid(@RequestParam("openid") String openid) {
+    public RestModel getUserInfoByOpenid() {
+        String openid = request.getHeader("openid");
         UserInfoVo userInfo = userService.getUserInfoByOpenId(openid);
         userInfo.setOpenid(openid);
         if(userInfo == null) {
@@ -47,7 +49,7 @@ public class LoginController {
     @Autowired
     private RestTemplate restTemplate;
 
-    @GetMapping("/getUserInfo")
+    @GetMapping("/getOpenid")
     public RestModel getUserInfo(@RequestParam("code") String code,
                                  @RequestParam("encryptedData") String encryptedData,
                                  @RequestParam("iv") String iv) {
@@ -58,24 +60,44 @@ public class LoginController {
         WeiXinLogin weiXinLogin = JSONObject.parseObject(s.getBody(), WeiXinLogin.class);
         String openid = weiXinLogin.getOpenid();
         UserInfoVo userInfo = userService.getUserInfoByOpenId(openid);
-        userInfo.setOpenid(openid);
+        if(userInfo != null) {
+            userInfo.setOpenid(openid);
+        }
         data.put("openid", openid);
-        data.put("userInfo", userInfo);
+//        data.put("userInfo", userInfo);
+        System.out.println("=========================");
+        System.out.println(openid);
+        System.out.println(JSONObject.toJSONString(RestModel.success(data)));
         return RestModel.success(data);
 
     }
 
+    @Autowired
+    private HttpServletRequest request;
+
     @PostMapping("/saveUserInfo")
     public RestModel saveUserInfo(@RequestBody UserInfoVo userInfoVo) {
-        if(userInfoVo.getOpenid() == null ||
-                userInfoVo.getDepartMentName() == null ||
-                userInfoVo.getRole() ==null ||
+        if(userInfoVo.getDepartMentName() == null ||
                 userInfoVo.getUserName() == null ||
                 userInfoVo.getTelPhoneNum() == null){
             return RestModel.fail("000001", "use info error");
         }
+        String openid = request.getHeader("openid");
+        userInfoVo.setOpenid(openid);
+        userInfoVo.setRole("null");
         Boolean result =  userService.saveUserInfo(userInfoVo);
         return  result ? RestModel.success(result) : RestModel.fail("000001", "user add fail");
+    }
+
+    @GetMapping("/getUserByToken")
+    public RestModel getUserByToken() {
+        String openid = request.getHeader("openid");
+        UserInfoVo userInfo = userService.getUserInfoByOpenId(openid);
+        if(userInfo != null) {
+            userInfo.setOpenid(openid);
+        }
+        return RestModel.success(userInfo);
+
     }
 
     @GetMapping("/getUserByDepartmentName")
