@@ -181,7 +181,7 @@
                 <version>1.4.9</version>
                 <configuration>
                     <tag>develop</tag>
-                    <repository>${docker.image.prefix}/${project.artifactId}</repository>
+                    <repository>${docker.image.prefix}/factory_task</repository>
                 </configuration>
             </plugin>
             <!-- end::plugin[] -->
