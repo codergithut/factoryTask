@@ -1,16 +1,25 @@
 package com.tianjian.factory.model.task;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@ApiModel
 public class TaskTemplateTypeMetaVo {
 
     /**
      * 模板类型
      */
+    @ApiModelProperty("模板类型")
     private String taskTemplateType;
 
-    List<TaskTemplateTypeMetaDetailVo> taskTemplateTypeMetaDetails;
+    /**
+     * 模版详情
+     */
+    @ApiModelProperty("模版详情")
+    private List<TaskTemplateTypeMetaDetailVo> taskTemplateTypeMetaDetails;
 
     public String getTaskTemplateType() {
         return taskTemplateType;

@@ -1,33 +1,46 @@
 package com.tianjian.factory.model.task;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@ApiModel
 public class WorkTemplateVo {
 
+    @ApiModelProperty("服务器返回码")
     private String id;
 
     /**
      * 工作名称
      */
+    @ApiModelProperty("工作名称")
     private String jobName;
 
+    /**
+     * 工作描述
+     */
+    @ApiModelProperty("工作描述")
     private String jobDesc;
 
     /**
      * 任务流程模板
      */
+    @ApiModelProperty("任务流程模板")
     private List<WorkTemplateDetailVo> subTasks;
 
     /**
      * 启动时间
      */
+    @ApiModelProperty("启动时间")
     private Date startDate;
 
     /**
      * 结束时间
      */
+    @ApiModelProperty("结束时间")
     private Date endDate;
 
     public String getId() {

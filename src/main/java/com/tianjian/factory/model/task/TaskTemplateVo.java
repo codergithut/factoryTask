@@ -1,33 +1,46 @@
 package com.tianjian.factory.model.task;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
+@ApiModel
 public class TaskTemplateVo {
 
     /**
      * 模板id
      */
+    @ApiModelProperty("模板id")
     private String taskCode;
 
     /**
      * 模板名称
      */
+    @ApiModelProperty("模板名称")
     private String taskName;
 
     /**
      * 模板类型具体数据
      */
+    @ApiModelProperty("模板类型具体数据")
     private List<TaskTemplateTypeMetaVo> taskTemplateTypeMetaVos;
 
     /**
      * 模板类型数据
      */
+    @ApiModelProperty("模板类型数据")
     private Set<String> taskTemplateTypes;
 
 
+    /**
+     * 元数据具体数据
+     * @return
+     */
+    @ApiModelProperty("元数据具体数据")
     public List<TaskTemplateTypeMetaVo> getTaskTemplateTypeMetaVos() {
         return taskTemplateTypeMetaVos;
     }

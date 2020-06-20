@@ -1,13 +1,15 @@
 package com.tianjian.factory.model.common;
 
-public class RestModel {
+
+public class RestModel<T> {
+
     private String code;
 
-    private Object data;
+    private T data;
 
     private String msg;
 
-    public RestModel(String code, Object data, String msg) {
+    public RestModel(String code, T data, String msg) {
         this.code = code;
         this.msg = msg;
         this.data = data;
@@ -29,11 +31,11 @@ public class RestModel {
         this.code = code;
     }
 
-    public Object getData() {
+    public T getData() {
         return data;
     }
 
-    public void setData(Object data) {
+    public void setData(T data) {
         this.data = data;
     }
 
@@ -45,14 +47,14 @@ public class RestModel {
         this.msg = msg;
     }
 
-    public static RestModel success(Object data) {
-        RestModel restModel = null;
-        if(data != null) {
-            restModel = new RestModel("0000",  data, "success");
-        } else {
-            restModel = new RestModel("0000", "success");
-        }
-
+    public static <T> RestModel<T> success(T data) {
+        RestModel<T> restModel = new RestModel<T>();
+//        if(data != null) {
+//            restModel = new RestModel<>("0000",  data, "success");
+//        } else {
+//            restModel = new RestModel("0000", "success");
+//        }
+        restModel.setData(data);
         return restModel;
     }
 

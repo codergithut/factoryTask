@@ -1,19 +1,26 @@
 package com.tianjian.factory.model.task;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel
 public class TaskTemplateTypeMetaDetailVo {
     /**
      * 数据key
      */
+    @ApiModelProperty("数据key")
     private String metaName;
 
     /**
      * 数据类型
      */
+    @ApiModelProperty("数据类型")
     private String metaType;
 
     /**
      * 是否必填
      */
+    @ApiModelProperty("是否必填")
     private String isRequired;
 
     public String getMetaName() {

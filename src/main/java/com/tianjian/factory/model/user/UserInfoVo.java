@@ -1,44 +1,55 @@
 package com.tianjian.factory.model.user;
 
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel
 public class UserInfoVo {
 
     /**
      * 微信id
      */
+    @ApiModelProperty("openid")
     private String openid;
 
     /**
      * 用户id
      */
+    @ApiModelProperty("用户id")
     private String userCode;
 
     /**
      * 用户名称
      */
+    @ApiModelProperty("用户名称")
     private String userName;
 
 
     /**
      * 用户密码
      */
+    @ApiModelProperty("用户密码")
     private String passWord;
 
     /**
      * 用户手机号
      */
+    @ApiModelProperty("用户手机号")
     private String telPhoneNum;
 
 
     /**
      * 用户角色
      */
+    @ApiModelProperty("openid")
     private String role;
 
 
     /**
      * 部门
      */
+    @ApiModelProperty("部门")
     private String departMentName;
 
 

@@ -1,35 +1,45 @@
 package com.tianjian.factory.model.task;
 
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel
 public class WorkInsDataVo {
     /**
      * 工作状态
      */
+    @ApiModelProperty("工作状态")
     private String workStatus;
 
     /**
      * 当前任务模板id
      */
+    @ApiModelProperty("当前任务模板id")
     private String currentTaskTemplateId;
 
     /**
      * 任务模板
      */
+    @ApiModelProperty("任务模板")
     private String workTemplateId;
 
     /**
      * 任务次序
      */
+    @ApiModelProperty("任务次序")
     private int orderNum;
 
     /**
      * 当前处理人编号
      */
+    @ApiModelProperty("当前处理人编号")
     private String handerUserId;
 
     /**
      * 流程总数
      */
+    @ApiModelProperty("流程总数")
     private int totalTaskNum;
 
     public String getWorkStatus() {

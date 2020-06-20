@@ -50,7 +50,7 @@ public class LoginController {
     private RestTemplate restTemplate;
 
     @GetMapping("/getOpenid")
-    public RestModel getUserInfo(@RequestParam("code") String code,
+    public RestModel<Map<String,Object>> getUserInfo(@RequestParam("code") String code,
                                  @RequestParam("encryptedData") String encryptedData,
                                  @RequestParam("iv") String iv) {
         String req = "https://api.weixin.qq.com/sns/jscode2session?appid=wxf9682b2d07b42000&secret=11563aa67bfedfa04777176081e240c2&js_code=$code&grant_type=authorization_code";
@@ -76,7 +76,7 @@ public class LoginController {
     private HttpServletRequest request;
 
     @PostMapping("/saveUserInfo")
-    public RestModel saveUserInfo(@RequestBody UserInfoVo userInfoVo) {
+    public RestModel<Boolean> saveUserInfo(@RequestBody UserInfoVo userInfoVo) {
         if(userInfoVo.getDepartMentName() == null ||
                 userInfoVo.getUserName() == null ||
                 userInfoVo.getTelPhoneNum() == null){
@@ -90,7 +90,7 @@ public class LoginController {
     }
 
     @GetMapping("/getUserByToken")
-    public RestModel getUserByToken() {
+    public RestModel<UserInfoVo> getUserByToken() {
         String openid = request.getHeader("openid");
         UserInfoVo userInfo = userService.getUserInfoByOpenId(openid);
         if(userInfo != null) {
@@ -101,7 +101,7 @@ public class LoginController {
     }
 
     @GetMapping("/getUserByDepartmentName")
-    public RestModel getUserByDepartMentId(@RequestParam("departMentName") String departMentName) {
+    public RestModel<List<UserInfoVo>> getUserByDepartMentId(@RequestParam("departMentName") String departMentName) {
         List<UserInfoVo> userInfoVos = userService.findByDepartMentName(departMentName);
         if(CollectionUtils.isEmpty(userInfoVos)) {
             return RestModel.fail("000001", "get data fail");
@@ -110,7 +110,7 @@ public class LoginController {
     }
 
     @GetMapping("/getAllUser")
-    public RestModel getAllUser() {
+    public RestModel<List<UserInfoVo>> getAllUser() {
         List<UserInfoVo> userInfoVos = userService.findAllUser();
         if(CollectionUtils.isEmpty(userInfoVos)) {
             return RestModel.fail("000001", "get data fail");
@@ -119,7 +119,7 @@ public class LoginController {
     }
 
     @GetMapping("/getUserByUserId")
-    public RestModel getUserInfoByUserId(@RequestParam("userId") String userId) {
+    public RestModel<UserInfoVo> getUserInfoByUserId(@RequestParam("userId") String userId) {
         UserInfoVo userInfoVo = userService.findByUserId(userId);
         if(userInfoVo == null) {
             return RestModel.fail("000001", "can not find user info");
