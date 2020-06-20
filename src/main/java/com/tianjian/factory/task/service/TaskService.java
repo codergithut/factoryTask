@@ -245,6 +245,22 @@ public class TaskService {
         }).collect(Collectors.toList());
     }
 
+    public List<WorkTemplateVo> getAllWork() {
+        List<WorkTemplatePo> workTemplatePos = (List<WorkTemplatePo>) workTemplateCurd.findAll();
+        if(CollectionUtils.isEmpty(workTemplatePos)) {
+            return null;
+        }
+        return workTemplatePos.stream().map(e -> {
+            WorkTemplateVo workTemplateVo = new WorkTemplateVo();
+            BeanUtils.copyProperties(e, workTemplateVo);
+            workTemplateVo.setJobName(e.getWorkName());
+            String workTemplateId = e.getId();
+            WorkInsDataPo workInsDataPo = workInsDataCurd.findByWorkTemplateId(workTemplateId);
+            workTemplateVo.setJobStatus(workInsDataPo.getWorkStatus());
+            return workTemplateVo;
+        }).collect(Collectors.toList());
+    }
+
 
     public List<TaskTemplateVo> getAllTaskTemplates() {
         List<TaskTemplatePo> taskTemplatePos = (List<TaskTemplatePo>) taskTemplateCurd.findAll();

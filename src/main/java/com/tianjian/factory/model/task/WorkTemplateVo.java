@@ -43,6 +43,12 @@ public class WorkTemplateVo {
     @ApiModelProperty("结束时间")
     private Date endDate;
 
+    /**
+     * 任务状态标识
+     */
+    @ApiModelProperty("任务状态")
+    private String jobStatus;
+
     public String getId() {
         return id;
     }
@@ -89,6 +95,14 @@ public class WorkTemplateVo {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public String getJobStatus() {
+        return jobStatus;
+    }
+
+    public void setJobStatus(String jobStatus) {
+        this.jobStatus = jobStatus;
     }
 
     public static WorkTemplateVo mockData() {

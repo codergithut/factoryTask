@@ -98,6 +98,16 @@ public class TaskController {
         }
     }
 
+    @GetMapping("/getWorks")
+    public RestModel getAllWork() {
+        List<WorkTemplateVo> workInsDataVos = taskService.getAllWork();
+        if(CollectionUtils.isEmpty(workInsDataVos)) {
+            return RestModel.fail("000001", "get work fail");
+        } else {
+            return success(workInsDataVos);
+        }
+    }
+
     @GetMapping("/startWork")
     public RestModel<Boolean> startWork(@RequestParam("workTemplateId") String workTemplateId) {
         boolean result = taskService.workProcess(workTemplateId, 0);

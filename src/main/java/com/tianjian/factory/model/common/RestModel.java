@@ -49,12 +49,9 @@ public class RestModel<T> {
 
     public static <T> RestModel<T> success(T data) {
         RestModel<T> restModel = new RestModel<T>();
-//        if(data != null) {
-//            restModel = new RestModel<>("0000",  data, "success");
-//        } else {
-//            restModel = new RestModel("0000", "success");
-//        }
         restModel.setData(data);
+        restModel.setCode("0000");
+        restModel.setMsg("success");
         return restModel;
     }
 
