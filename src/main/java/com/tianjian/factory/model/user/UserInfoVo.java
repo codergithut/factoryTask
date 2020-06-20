@@ -1,6 +1,5 @@
 package com.tianjian.factory.model.user;
 
-import java.util.UUID;
 
 public class UserInfoVo {
 
