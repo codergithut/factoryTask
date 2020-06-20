@@ -233,15 +233,17 @@ public class TaskService {
         return taskTemplateTypeMetaVo;
     }
 
-    public List<WorkInsDataVo> getMyWork(String userId) {
+    public List<WorkTemplateVo> getMyWork(String userId) {
         List<WorkInsDataPo> workInsDataPos = workInsDataCurd.findByHanderUserIdAndWorkStatus(userId, "active");
         if(CollectionUtils.isEmpty(workInsDataPos)) {
             return null;
         }
         return workInsDataPos.stream().map(e -> {
-            WorkInsDataVo workInsDataVo = new WorkInsDataVo();
-            BeanUtils.copyProperties(e, workInsDataVo);
-            return workInsDataVo;
+            WorkTemplateVo workTemplateVo = new WorkTemplateVo();
+            WorkTemplatePo workTemplatePo = workTemplateCurd.findById(e.getWorkTemplateId()).get();
+            BeanUtils.copyProperties(workTemplatePo, workTemplateVo);
+            workTemplateVo.setJobName(workTemplatePo.getWorkName());
+            return workTemplateVo;
         }).collect(Collectors.toList());
     }
 

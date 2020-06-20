@@ -7,10 +7,12 @@ import com.tianjian.factory.model.task.TaskTemplateVo;
 import com.tianjian.factory.model.task.WorkInsDataVo;
 import com.tianjian.factory.model.task.WorkTemplateVo;
 import com.tianjian.factory.task.service.TaskService;
+import com.tianjian.factory.util.RequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Set;
 
@@ -19,6 +21,9 @@ import static com.tianjian.factory.model.common.RestModel.success;
 @RequestMapping("/task")
 @RestController
 public class TaskController {
+
+    @Autowired
+    private HttpServletRequest request;
 
     @Autowired
     private TaskService taskService;
@@ -88,13 +93,15 @@ public class TaskController {
         }
     }
 
-    @GetMapping("/getMyWork")
-    public RestModel<List<WorkInsDataVo>> getMyWork(@RequestParam("userId") String userId) {
-        List<WorkInsDataVo> workInsDataVos = taskService.getMyWork(userId);
-        if(CollectionUtils.isEmpty(workInsDataVos)) {
+    @GetMapping("/getMyWorks")
+    public RestModel<List<WorkTemplateVo>> getMyWork() {
+        String openid = RequestUtil.getUserCodeBySession(request);
+        String userId = "1";
+        List<WorkTemplateVo> workTemplateVos = taskService.getMyWork(userId);
+        if(CollectionUtils.isEmpty(workTemplateVos)) {
             return RestModel.fail("000001", "get work fail");
         } else {
-            return success(workInsDataVos);
+            return success(workTemplateVos);
         }
     }
 
