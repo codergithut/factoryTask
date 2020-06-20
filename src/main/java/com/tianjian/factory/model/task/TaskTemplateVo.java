@@ -3,18 +3,19 @@ package com.tianjian.factory.model.task;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 public class TaskTemplateVo {
 
     /**
      * 模板id
      */
-    private String id;
+    private String taskCode;
 
     /**
      * 模板名称
      */
-    private String taskTemplateName;
+    private String taskName;
 
     /**
      * 模板类型具体数据
@@ -27,28 +28,28 @@ public class TaskTemplateVo {
     private Set<String> taskTemplateTypes;
 
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getTaskTemplateName() {
-        return taskTemplateName;
-    }
-
-    public void setTaskTemplateName(String taskTemplateName) {
-        this.taskTemplateName = taskTemplateName;
-    }
-
     public List<TaskTemplateTypeMetaVo> getTaskTemplateTypeMetaVos() {
         return taskTemplateTypeMetaVos;
     }
 
     public void setTaskTemplateTypeMetaVos(List<TaskTemplateTypeMetaVo> taskTemplateTypeMetaVos) {
         this.taskTemplateTypeMetaVos = taskTemplateTypeMetaVos;
+    }
+
+    public String getTaskCode() {
+        return taskCode;
+    }
+
+    public void setTaskCode(String taskCode) {
+        this.taskCode = taskCode;
+    }
+
+    public String getTaskName() {
+        return taskName;
+    }
+
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
     }
 
     public Set<String> getTaskTemplateTypes() {
@@ -61,11 +62,13 @@ public class TaskTemplateVo {
 
     public static TaskTemplateVo mockTaskTemplateVo() {
         TaskTemplateVo taskTemplateVo = new TaskTemplateVo();
-        taskTemplateVo.setTaskTemplateName("test template");
+        taskTemplateVo.setTaskCode(UUID.randomUUID().toString());
+        taskTemplateVo.setTaskName("taskName");
         Set<String> v = new HashSet<>();
         v.add("userInfo");
         v.add("orderInfo");
         taskTemplateVo.setTaskTemplateTypes(v);
         return taskTemplateVo;
     }
+
 }

@@ -73,6 +73,7 @@ public class TaskService {
     public boolean saveTaskTemplate(TaskTemplateVo taskTemplateVo) {
         TaskTemplatePo taskTemplatePo = new TaskTemplatePo();
         BeanUtils.copyProperties(taskTemplateVo, taskTemplatePo);
+        taskTemplatePo.setTaskTemplateName(taskTemplateVo.getTaskName());
         taskTemplatePo.setId(UUID.randomUUID().toString());
         taskTemplatePo.setTaskTemplateTypes(JSON.toJSONString(taskTemplateVo.getTaskTemplateTypes()));
         return taskTemplateCurd.save(taskTemplatePo) != null;
@@ -94,6 +95,7 @@ public class TaskService {
             for(String taskTemplateType : templateTypes) {
                 taskTemplateTypeMetaVos.add(getTaskTemplateTypeMetaVoByTaskTemplateType(taskTemplateType));
             }
+            taskTemplateVo.setTaskName(taskTemplatePo.getTaskTemplateName());
             taskTemplateVo.setTaskTemplateTypes(templateTypes);
             taskTemplateVo.setTaskTemplateTypeMetaVos(taskTemplateTypeMetaVos);
             return taskTemplateVo;
@@ -116,8 +118,9 @@ public class TaskService {
         //模板基础数据添加
         WorkTemplatePo workTemplatePo = new WorkTemplatePo();
         BeanUtils.copyProperties(workTemplateVo, workTemplatePo);
+        workTemplatePo.setWorkName(workTemplateVo.getJobName());
         workTemplatePo.setId(UUID.randomUUID().toString());
-        List<WorkTemplateDetailVo> workTemplateDetailVos = workTemplateVo.getWorkTemplateDetailVos();
+        List<WorkTemplateDetailVo> workTemplateDetailVos = workTemplateVo.getSubTasks();
         List<WorkTemplateDetailPo> workTemplateDetailPos = new ArrayList<>();
         int orderNum = 0;
         //具体工作模板添加
@@ -240,5 +243,22 @@ public class TaskService {
             BeanUtils.copyProperties(e, workInsDataVo);
             return workInsDataVo;
         }).collect(Collectors.toList());
+    }
+
+
+    public List<TaskTemplateVo> getAllTaskTemplates() {
+        List<TaskTemplatePo> taskTemplatePos = (List<TaskTemplatePo>) taskTemplateCurd.findAll();
+        List<TaskTemplateVo> taskTemplateVos = new ArrayList<>();
+        if(CollectionUtils.isEmpty(taskTemplatePos)){
+            return null;
+        }
+        taskTemplateVos = taskTemplatePos.stream().map(e -> {
+            TaskTemplateVo taskTemplateVo = new TaskTemplateVo();
+            BeanUtils.copyProperties(e, taskTemplateVo);
+            taskTemplateVo.setTaskCode(e.getId());
+            taskTemplateVo.setTaskName(e.getTaskTemplateName());
+            return taskTemplateVo;
+        }).collect(Collectors.toList());
+        return taskTemplateVos;
     }
 }

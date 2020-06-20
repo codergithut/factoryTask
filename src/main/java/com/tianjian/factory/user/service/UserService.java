@@ -38,6 +38,7 @@ public class UserService {
             }
             UserInfoVo userInfo = new UserInfoVo();
             BeanUtils.copyProperties(userInfoPoOpt.get(), userInfo);
+            userInfo.setUserCode(userInfoPoOpt.get().getId());
             return userInfo;
         } else {
             return null;
@@ -75,6 +76,7 @@ public class UserService {
             return userInfoPos.stream().map(e -> {
                 UserInfoVo userInfoVo = new UserInfoVo();
                 BeanUtils.copyProperties(e, userInfoVo);
+                userInfoVo.setUserCode(e.getId());
                 return userInfoVo;
             }).collect(Collectors.toList());
         }
@@ -87,6 +89,7 @@ public class UserService {
             return userInfoPos.stream().map(e -> {
                 UserInfoVo userInfoVo = new UserInfoVo();
                 BeanUtils.copyProperties(e, userInfoVo);
+                userInfoVo.setUserCode(e.getId());
                 return userInfoVo;
             }).collect(Collectors.toList());
         }

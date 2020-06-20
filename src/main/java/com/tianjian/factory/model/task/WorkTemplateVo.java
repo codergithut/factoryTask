@@ -11,12 +11,14 @@ public class WorkTemplateVo {
     /**
      * 工作名称
      */
-    private String workName;
+    private String jobName;
+
+    private String jobDesc;
 
     /**
      * 任务流程模板
      */
-    private List<WorkTemplateDetailVo> workTemplateDetailVos;
+    private List<WorkTemplateDetailVo> subTasks;
 
     /**
      * 启动时间
@@ -36,20 +38,28 @@ public class WorkTemplateVo {
         this.id = id;
     }
 
-    public List<WorkTemplateDetailVo> getWorkTemplateDetailVos() {
-        return workTemplateDetailVos;
+    public String getJobName() {
+        return jobName;
     }
 
-    public void setWorkTemplateDetailVos(List<WorkTemplateDetailVo> workTemplateDetailVos) {
-        this.workTemplateDetailVos = workTemplateDetailVos;
+    public void setJobName(String jobName) {
+        this.jobName = jobName;
     }
 
-    public String getWorkName() {
-        return workName;
+    public String getJobDesc() {
+        return jobDesc;
     }
 
-    public void setWorkName(String workName) {
-        this.workName = workName;
+    public void setJobDesc(String jobDesc) {
+        this.jobDesc = jobDesc;
+    }
+
+    public List<WorkTemplateDetailVo> getSubTasks() {
+        return subTasks;
+    }
+
+    public void setSubTasks(List<WorkTemplateDetailVo> subTasks) {
+        this.subTasks = subTasks;
     }
 
     public Date getStartDate() {
@@ -72,7 +82,7 @@ public class WorkTemplateVo {
         WorkTemplateVo workTemplateVo = new WorkTemplateVo();
         workTemplateVo.setEndDate(new Date());
         workTemplateVo.setStartDate(new Date());
-        workTemplateVo.setWorkName("work name");
+        workTemplateVo.setJobName("work name");
 
         List<WorkTemplateDetailVo> workTemplateDetailVos = new ArrayList<>();
 
@@ -84,7 +94,7 @@ public class WorkTemplateVo {
         workTemplateDetailVo.setTaskTemplateId("0f43d5f6-ced6-4832-9884-bc83fc548440");
 
         workTemplateDetailVos.add(workTemplateDetailVo);
-        workTemplateVo.setWorkTemplateDetailVos(workTemplateDetailVos);
+        workTemplateVo.setSubTasks(workTemplateDetailVos);
 
         return workTemplateVo;
     }

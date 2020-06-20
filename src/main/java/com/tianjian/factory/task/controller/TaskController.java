@@ -76,6 +76,16 @@ public class TaskController {
         return result ? RestModel.success(result) : RestModel.fail("000001", "create work template fail");
     }
 
+    @GetMapping("/getAllTaskTemplates")
+    public RestModel getAllTaskTemplates() {
+        List<TaskTemplateVo> taskTemplateVos = taskService.getAllTaskTemplates();
+        if(!CollectionUtils.isEmpty(taskTemplateVos)){
+            return RestModel.success(taskTemplateVos);
+        } else {
+            return RestModel.fail("000001", "getTaskTemplate fail");
+        }
+    }
+
     @GetMapping("/getMyWork")
     public RestModel getMyWork(@RequestParam("userId") String userId) {
         List<WorkInsDataVo> workInsDataVos = taskService.getMyWork(userId);

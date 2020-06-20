@@ -12,7 +12,7 @@ public class UserInfoVo {
     /**
      * 用户id
      */
-    private String id;
+    private String userCode;
 
     /**
      * 用户名称
@@ -42,12 +42,13 @@ public class UserInfoVo {
      */
     private String departMentName;
 
-    public String getId() {
-        return id;
+
+    public String getUserCode() {
+        return userCode;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUserCode(String userCode) {
+        this.userCode = userCode;
     }
 
     public String getUserName() {
@@ -102,7 +103,7 @@ public class UserInfoVo {
         UserInfoVo userInfoVo = new UserInfoVo();
         userInfoVo.setDepartMentName("develop");
         userInfoVo.setPassWord("tj");
-        userInfoVo.setId("e4511a57-e1bb-4cb7-b590-0be8a7ea8a01");
+        userInfoVo.setUserCode("e4511a57-e1bb-4cb7-b590-0be8a7ea8a01");
         userInfoVo.setOpenid("fd70aca2-efcf-4c1f-8027-3d91eb7bf64b");
         userInfoVo.setRole("boss");
         userInfoVo.setTelPhoneNum("12345973290");
