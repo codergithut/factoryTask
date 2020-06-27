@@ -133,7 +133,7 @@ public class TaskService {
             workTemplateDetailPos.add(workTemplateDetailPo);
         }
         return workTemplateDetailCurd.saveAll(workTemplateDetailPos) != null
-                && workTemplateCurd.save(workTemplatePo) != null ;
+                && workTemplateCurd.save(workTemplatePo) != null && workProcess(workTemplatePo.getId(), 0);
 
     }
 
@@ -278,5 +278,16 @@ public class TaskService {
             return taskTemplateVo;
         }).collect(Collectors.toList());
         return taskTemplateVos;
+    }
+
+    public WorkDetailDataVo findTaskInsInfo(String workTemplateId, String userId) {
+        WorkTemplateDetailPo workTemplateDetailPo = workTemplateDetailCurd.findByWorkTemplateIdAndHandleUserId(workTemplateId, userId);
+        WorkDetailDataVo workDetailDataVo = new WorkDetailDataVo();
+        workDetailDataVo.setSubmitTime(workTemplateDetailPo.getStartTime());
+        workDetailDataVo.setUpdateTime(workTemplateDetailPo.getEndTime());
+        workDetailDataVo.setTaskManager(workTemplateDetailPo.getHandleUserId());
+        workDetailDataVo.setTaskFlow(workTemplateDetailPo.getTaskTemplateName());
+        workDetailDataVo.setBelongs(workTemplateDetailPo.getWorkTemplateId());
+        return workDetailDataVo;
     }
 }

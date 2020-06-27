@@ -38,7 +38,7 @@ public class UserService {
             }
             UserInfoVo userInfo = new UserInfoVo();
             BeanUtils.copyProperties(userInfoPoOpt.get(), userInfo);
-            userInfo.setUserCode(userInfoPoOpt.get().getId());
+            userInfo.setUserId(userInfoPoOpt.get().getId());
             return userInfo;
         } else {
             return null;

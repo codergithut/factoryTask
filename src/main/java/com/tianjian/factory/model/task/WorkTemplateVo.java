@@ -19,34 +19,27 @@ public class WorkTemplateVo {
     @ApiModelProperty("工作名称")
     private String jobName;
 
-    /**
-     * 工作描述
-     */
-    @ApiModelProperty("工作描述")
+    @ApiModelProperty("服务器返回码")
     private String jobDesc;
 
     /**
      * 任务流程模板
      */
-    @ApiModelProperty("任务流程模板")
+    @ApiModelProperty("服务器返回码")
     private List<WorkTemplateDetailVo> subTasks;
 
     /**
      * 启动时间
      */
-    @ApiModelProperty("启动时间")
+    @ApiModelProperty("服务器返回码")
     private Date startDate;
 
     /**
      * 结束时间
      */
-    @ApiModelProperty("结束时间")
+    @ApiModelProperty("服务器返回码")
     private Date endDate;
 
-    /**
-     * 任务状态标识
-     */
-    @ApiModelProperty("任务状态")
     private String jobStatus;
 
     public String getId() {
@@ -97,14 +90,6 @@ public class WorkTemplateVo {
         this.endDate = endDate;
     }
 
-    public String getJobStatus() {
-        return jobStatus;
-    }
-
-    public void setJobStatus(String jobStatus) {
-        this.jobStatus = jobStatus;
-    }
-
     public static WorkTemplateVo mockData() {
         WorkTemplateVo workTemplateVo = new WorkTemplateVo();
         workTemplateVo.setEndDate(new Date());
@@ -124,5 +109,13 @@ public class WorkTemplateVo {
         workTemplateVo.setSubTasks(workTemplateDetailVos);
 
         return workTemplateVo;
+    }
+
+    public void setJobStatus(String jobStatus) {
+        this.jobStatus = jobStatus;
+    }
+
+    public String getJobStatus() {
+        return jobStatus;
     }
 }

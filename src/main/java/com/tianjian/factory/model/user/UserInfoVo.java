@@ -7,6 +7,8 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel
 public class UserInfoVo {
 
+    private String userId;
+
     /**
      * 微信id
      */
@@ -52,6 +54,13 @@ public class UserInfoVo {
     @ApiModelProperty("部门")
     private String departMentName;
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getUserCode() {
         return userCode;

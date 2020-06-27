@@ -4,7 +4,7 @@ package com.tianjian.factory.task.controller;
 import com.tianjian.factory.model.common.RestModel;
 import com.tianjian.factory.model.task.TaskTemplateTypeMetaVo;
 import com.tianjian.factory.model.task.TaskTemplateVo;
-import com.tianjian.factory.model.task.WorkInsDataVo;
+import com.tianjian.factory.model.task.WorkDetailDataVo;
 import com.tianjian.factory.model.task.WorkTemplateVo;
 import com.tianjian.factory.task.service.TaskService;
 import com.tianjian.factory.util.RequestUtil;
@@ -95,8 +95,7 @@ public class TaskController {
 
     @GetMapping("/getMyWorks")
     public RestModel<List<WorkTemplateVo>> getMyWork() {
-        String openid = RequestUtil.getUserCodeBySession(request);
-        String userId = "1";
+        String userId = RequestUtil.getUserCodeBySession(request);
         List<WorkTemplateVo> workTemplateVos = taskService.getMyWork(userId);
         if(CollectionUtils.isEmpty(workTemplateVos)) {
             return RestModel.fail("000001", "get work fail");
@@ -133,5 +132,14 @@ public class TaskController {
         boolean result = taskService.workReject(workTemplateId, orderNum);
         return result ? success(result) : RestModel.fail("000001", "start work fail");
     }
+
+    @GetMapping("/getTaskInsInfo")
+    public RestModel<WorkDetailDataVo> getTaskInsInfo(@RequestParam("workTemplateId") String workTemplateId) {
+        String userId = RequestUtil.getUserCodeBySession(request);
+        WorkDetailDataVo workDetailDataVo = taskService.findTaskInsInfo(workTemplateId, userId);
+        return RestModel.success(workDetailDataVo);
+
+    }
+
 
 }
