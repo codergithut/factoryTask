@@ -7,12 +7,12 @@ public class WorkTemplateDetailVo {
     /**
      * 当前子任务开始时间
      */
-    private Date startTime;
+    private Date startDate;
 
     /**
      * 结束时间
      */
-    private Date endTime;
+    private Date endDate;
 
     /**
      * 任务id
@@ -27,30 +27,30 @@ public class WorkTemplateDetailVo {
     /**
      * 处理人
      */
-    private String handleUserId;
+    private String userId;
 
-    public Date getStartTime() {
-        return startTime;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
-    public Date getEndTime() {
-        return endTime;
+    public Date getEndDate() {
+        return endDate;
     }
 
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
-    public String getHandleUserId() {
-        return handleUserId;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setHandleUserId(String handleUserId) {
-        this.handleUserId = handleUserId;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getTaskTemplateId() {

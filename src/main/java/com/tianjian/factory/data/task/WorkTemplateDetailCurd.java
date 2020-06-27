@@ -11,5 +11,5 @@ public interface WorkTemplateDetailCurd extends CrudRepository<WorkTemplateDetai
 
     List<WorkTemplateDetailPo> findByWorkTemplateId(String workTemplateId);
 
-    WorkTemplateDetailPo findByWorkTemplateIdAndHandleUserId(String workTemplateId, String userId);
+    WorkTemplateDetailPo findByWorkTemplateIdAndUserId(String workTemplateId, String userId);
 }

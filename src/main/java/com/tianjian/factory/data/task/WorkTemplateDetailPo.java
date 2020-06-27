@@ -26,17 +26,17 @@ public class WorkTemplateDetailPo {
     /**
      * 当前子任务开始时间
      */
-    private Date startTime;
+    private Date startDate;
 
     /**
      * 结束时间
      */
-    private Date endTime;
+    private Date endDate;
 
     /**
      * 处理人
      */
-    private String handleUserId;
+    private String userId;
 
     public String getTaskTemplateId() {
         return taskTemplateId;
@@ -72,30 +72,6 @@ public class WorkTemplateDetailPo {
         this.workTemplateId = workTemplateId;
     }
 
-    public Date getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Date startTime) {
-        this.startTime = startTime;
-    }
-
-    public Date getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Date endTime) {
-        this.endTime = endTime;
-    }
-
-    public String getHandleUserId() {
-        return handleUserId;
-    }
-
-    public void setHandleUserId(String handleUserId) {
-        this.handleUserId = handleUserId;
-    }
-
     public Integer getOrderNum() {
         return orderNum;
     }
@@ -110,5 +86,29 @@ public class WorkTemplateDetailPo {
 
     public void setTaskTemplateName(String taskTemplateName) {
         this.taskTemplateName = taskTemplateName;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

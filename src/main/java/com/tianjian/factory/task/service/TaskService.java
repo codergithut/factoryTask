@@ -156,7 +156,7 @@ public class TaskService {
 
         TaskInsDataPo taskInsDataPo = new TaskInsDataPo();
         taskInsDataPo.setId(UUID.randomUUID().toString());
-        taskInsDataPo.setHandleUserId(workTemplateDetailPo.getHandleUserId());
+        taskInsDataPo.setHandleUserId(workTemplateDetailPo.getUserId());
         taskInsDataPo.setTaskStatus("wait");
         taskInsDataPo.setTaskTemplateId(workTemplateDetailPo.getTaskTemplateId());
         //资源id很重要，是业务添加数据资源的表示
@@ -183,7 +183,7 @@ public class TaskService {
         workInsDataPo.setCurrentTaskTemplateId(workTemplateDetailPo.getTaskTemplateId());
         workInsDataPo.setOrderNum(orderNum);
         workInsDataPo.setWorkStatus("active");
-        workInsDataPo.setHanderUserId(workTemplateDetailPo.getHandleUserId());
+        workInsDataPo.setHanderUserId(workTemplateDetailPo.getUserId());
 
         return taskInsDataCurd.save(taskInsDataPo) != null && workInsDataCurd.save(workInsDataPo) != null;
     }
@@ -281,11 +281,11 @@ public class TaskService {
     }
 
     public WorkDetailDataVo findTaskInsInfo(String workTemplateId, String userId) {
-        WorkTemplateDetailPo workTemplateDetailPo = workTemplateDetailCurd.findByWorkTemplateIdAndHandleUserId(workTemplateId, userId);
+        WorkTemplateDetailPo workTemplateDetailPo = workTemplateDetailCurd.findByWorkTemplateIdAndUserId(workTemplateId, userId);
         WorkDetailDataVo workDetailDataVo = new WorkDetailDataVo();
-        workDetailDataVo.setSubmitTime(workTemplateDetailPo.getStartTime());
-        workDetailDataVo.setUpdateTime(workTemplateDetailPo.getEndTime());
-        workDetailDataVo.setTaskManager(workTemplateDetailPo.getHandleUserId());
+        workDetailDataVo.setSubmitTime(workTemplateDetailPo.getStartDate());
+        workDetailDataVo.setUpdateTime(workTemplateDetailPo.getEndDate());
+        workDetailDataVo.setTaskManager(workTemplateDetailPo.getUserId());
         workDetailDataVo.setTaskFlow(workTemplateDetailPo.getTaskTemplateName());
         workDetailDataVo.setBelongs(workTemplateDetailPo.getWorkTemplateId());
         return workDetailDataVo;

@@ -99,9 +99,9 @@ public class WorkTemplateVo {
         List<WorkTemplateDetailVo> workTemplateDetailVos = new ArrayList<>();
 
         WorkTemplateDetailVo workTemplateDetailVo = new WorkTemplateDetailVo();
-        workTemplateDetailVo.setEndTime(new Date());
-        workTemplateDetailVo.setHandleUserId("e4511a57-e1bb-4cb7-b590-0be8a7ea8a01");
-        workTemplateDetailVo.setStartTime(new Date());
+//        workTemplateDetailVo.setEndTime(new Date());
+//        workTemplateDetailVo.setHandleUserId("e4511a57-e1bb-4cb7-b590-0be8a7ea8a01");
+//        workTemplateDetailVo.setStartTime(new Date());
         workTemplateDetailVo.setTaskTemplateName("new task name");
         workTemplateDetailVo.setTaskTemplateId("0f43d5f6-ced6-4832-9884-bc83fc548440");
 
