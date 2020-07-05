@@ -1,6 +1,7 @@
 package com.tianjian.factory.task.service;
 
 import com.alibaba.fastjson.JSON;
+import com.tianjian.factory.cache.CacheService;
 import com.tianjian.factory.data.task.*;
 import com.tianjian.factory.model.task.*;
 import org.springframework.beans.BeanUtils;
@@ -13,6 +14,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class TaskService {
+
+    @Autowired
+    private CacheService cacheService;
 
     @Autowired
     private TaskTemplateTypeMetaCurd taskTemplateTypeMetaCurd;
@@ -118,7 +122,6 @@ public class TaskService {
         //模板基础数据添加
         WorkTemplatePo workTemplatePo = new WorkTemplatePo();
         BeanUtils.copyProperties(workTemplateVo, workTemplatePo);
-        workTemplatePo.setWorkName(workTemplateVo.getJobName());
         workTemplatePo.setId(UUID.randomUUID().toString());
         List<WorkTemplateDetailVo> workTemplateDetailVos = workTemplateVo.getSubTasks();
         List<WorkTemplateDetailPo> workTemplateDetailPos = new ArrayList<>();
@@ -157,7 +160,7 @@ public class TaskService {
         TaskInsDataPo taskInsDataPo = new TaskInsDataPo();
         taskInsDataPo.setId(UUID.randomUUID().toString());
         taskInsDataPo.setHandleUserId(workTemplateDetailPo.getUserId());
-        taskInsDataPo.setTaskStatus("wait");
+        taskInsDataPo.setTaskStatus("active");
         taskInsDataPo.setTaskTemplateId(workTemplateDetailPo.getTaskTemplateId());
         //资源id很重要，是业务添加数据资源的表示
         taskInsDataPo.setResourceId(UUID.randomUUID().toString());
@@ -189,7 +192,7 @@ public class TaskService {
     }
 
     public boolean workSubmit(String workTemplateId) {
-        TaskInsDataPo taskInsDataPo = taskInsDataCurd.findByWorkTemplateIdAndTaskStatus(workTemplateId, "wait");
+        TaskInsDataPo taskInsDataPo = taskInsDataCurd.findByWorkTemplateIdAndTaskStatus(workTemplateId, "active");
         taskInsDataPo.setTaskStatus("finish");
         taskInsDataCurd.save(taskInsDataPo);
         WorkInsDataPo workInsDataPo = workInsDataCurd.findByWorkTemplateIdAndWorkStatus(workTemplateId, "active");
@@ -242,7 +245,6 @@ public class TaskService {
             WorkTemplateVo workTemplateVo = new WorkTemplateVo();
             WorkTemplatePo workTemplatePo = workTemplateCurd.findById(e.getWorkTemplateId()).get();
             BeanUtils.copyProperties(workTemplatePo, workTemplateVo);
-            workTemplateVo.setJobName(workTemplatePo.getWorkName());
             return workTemplateVo;
         }).collect(Collectors.toList());
     }
@@ -255,7 +257,6 @@ public class TaskService {
         return workTemplatePos.stream().map(e -> {
             WorkTemplateVo workTemplateVo = new WorkTemplateVo();
             BeanUtils.copyProperties(e, workTemplateVo);
-            workTemplateVo.setJobName(e.getWorkName());
             String workTemplateId = e.getId();
             WorkInsDataPo workInsDataPo = workInsDataCurd.findByWorkTemplateId(workTemplateId);
             workTemplateVo.setJobStatus(workInsDataPo.getWorkStatus());
@@ -280,14 +281,52 @@ public class TaskService {
         return taskTemplateVos;
     }
 
-    public WorkDetailDataVo findTaskInsInfo(String workTemplateId, String userId) {
+    public TaskDetailDataVo findTaskInsInfo(String workTemplateId, String userId) {
         WorkTemplateDetailPo workTemplateDetailPo = workTemplateDetailCurd.findByWorkTemplateIdAndUserId(workTemplateId, userId);
-        WorkDetailDataVo workDetailDataVo = new WorkDetailDataVo();
-        workDetailDataVo.setSubmitTime(workTemplateDetailPo.getStartDate());
-        workDetailDataVo.setUpdateTime(workTemplateDetailPo.getEndDate());
-        workDetailDataVo.setTaskManager(workTemplateDetailPo.getUserId());
-        workDetailDataVo.setTaskFlow(workTemplateDetailPo.getTaskTemplateName());
-        workDetailDataVo.setBelongs(workTemplateDetailPo.getWorkTemplateId());
-        return workDetailDataVo;
+        TaskDetailDataVo taskDetailDataVo = new TaskDetailDataVo();
+        taskDetailDataVo.setSubmitTime(workTemplateDetailPo.getStartDate());
+        taskDetailDataVo.setUpdateTime(workTemplateDetailPo.getEndDate());
+        taskDetailDataVo.setTaskManager(cacheService.getUserName(workTemplateDetailPo.getUserId()));
+        taskDetailDataVo.setTaskFlow(workTemplateDetailPo.getTaskTemplateName());
+        taskDetailDataVo.setBelongs(cacheService.getWorkName(workTemplateDetailPo.getWorkTemplateId()));
+        return taskDetailDataVo;
     }
+
+    public List<TaskDetailDataVo> findWorkInfoAndWorkId(String workTemplateId) {
+        List<WorkTemplateDetailPo> workTemplateDetailPos = workTemplateDetailCurd.findByWorkTemplateId(workTemplateId);
+        WorkInsDataPo workInsDataPo = workInsDataCurd.findByWorkTemplateIdAndWorkStatus(workTemplateId, "active");
+
+        List<TaskDetailDataVo> taskDetailDataVos = workTemplateDetailPos.stream().map(e -> {
+            TaskDetailDataVo taskDetailDataVo = new TaskDetailDataVo();
+            taskDetailDataVo.setTaskFlow(e.getTaskTemplateName());
+            taskDetailDataVo.setSubmitTime(e.getStartDate());
+            taskDetailDataVo.setUpdateTime(e.getEndDate());
+            taskDetailDataVo.setBelongs(cacheService.getWorkName(e.getWorkTemplateId()));
+            taskDetailDataVo.setTaskManager(cacheService.getUserName(e.getUserId()));
+            if(workInsDataPo == null) {
+                taskDetailDataVo.setTaskStatus("finish");
+                return taskDetailDataVo;
+            }
+            if(e.getOrderNum() < workInsDataPo.getOrderNum()) {
+                taskDetailDataVo.setTaskStatus("finish");
+            } else if (e.getOrderNum() == workInsDataPo.getOrderNum()){
+                taskDetailDataVo.setTaskStatus("active");
+            } else {
+                taskDetailDataVo.setTaskStatus("wait");
+            }
+            return taskDetailDataVo;
+        }).collect(Collectors.toList());
+        return taskDetailDataVos;
+    }
+
+    public WorkTemplateVo getWorkInfoById(String workTemplateId) {
+        Optional<WorkTemplatePo> workTemplatePoOptional = workTemplateCurd.findById(workTemplateId);
+        WorkTemplateVo workTemplateVo = new WorkTemplateVo();
+        if(workTemplatePoOptional.isPresent()) {
+            WorkTemplatePo workTemplatePo = workTemplatePoOptional.get();
+            BeanUtils.copyProperties(workTemplatePoOptional.get(), workTemplateVo);
+        }
+        return workTemplateVo;
+    }
+
 }

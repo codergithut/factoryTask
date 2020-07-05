@@ -3,8 +3,6 @@ package com.tianjian.factory.data.task;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 
 @Entity
@@ -24,7 +22,12 @@ public class WorkTemplatePo {
     /**
      * 工作名称
      */
-    private String workName;
+    private String jobName;
+
+    /**
+     * 工作描述
+     */
+    private String jobDesc;
 
     /**
      * 任务结束时间
@@ -55,11 +58,19 @@ public class WorkTemplatePo {
         this.endDate = endDate;
     }
 
-    public String getWorkName() {
-        return workName;
+    public String getJobName() {
+        return jobName;
     }
 
-    public void setWorkName(String workName) {
-        this.workName = workName;
+    public void setJobName(String jobName) {
+        this.jobName = jobName;
+    }
+
+    public String getJobDesc() {
+        return jobDesc;
+    }
+
+    public void setJobDesc(String jobDesc) {
+        this.jobDesc = jobDesc;
     }
 }

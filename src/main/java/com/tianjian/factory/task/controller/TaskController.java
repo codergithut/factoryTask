@@ -2,10 +2,7 @@ package com.tianjian.factory.task.controller;
 
 
 import com.tianjian.factory.model.common.RestModel;
-import com.tianjian.factory.model.task.TaskTemplateTypeMetaVo;
-import com.tianjian.factory.model.task.TaskTemplateVo;
-import com.tianjian.factory.model.task.WorkDetailDataVo;
-import com.tianjian.factory.model.task.WorkTemplateVo;
+import com.tianjian.factory.model.task.*;
 import com.tianjian.factory.task.service.TaskService;
 import com.tianjian.factory.util.RequestUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -134,10 +131,21 @@ public class TaskController {
     }
 
     @GetMapping("/getTaskInsInfo")
-    public RestModel<WorkDetailDataVo> getTaskInsInfo(@RequestParam("workTemplateId") String workTemplateId) {
+    public RestModel<TaskDetailDataVo> getTaskInsInfo(@RequestParam("workTemplateId") String workTemplateId) {
         String userId = RequestUtil.getUserCodeBySession(request);
-        WorkDetailDataVo workDetailDataVo = taskService.findTaskInsInfo(workTemplateId, userId);
-        return RestModel.success(workDetailDataVo);
+        TaskDetailDataVo taskDetailDataVo = taskService.findTaskInsInfo(workTemplateId, userId);
+        return RestModel.success(taskDetailDataVo);
+
+    }
+
+    @GetMapping("/getTaskInsByWorkId")
+    public RestModel<WorkDetailInfoVo> getWorkInfo(@RequestParam("workTemplateId") String workTemplateId) {
+        WorkDetailInfoVo workDetailInfoVo = new WorkDetailInfoVo();
+        WorkTemplateVo workTemplateVo = taskService.getWorkInfoById(workTemplateId);
+        List<TaskDetailDataVo> taskDetailDataVos = taskService.findWorkInfoAndWorkId(workTemplateId);
+        workDetailInfoVo.setTaskDetailDatas(taskDetailDataVos);
+        workDetailInfoVo.setWorkTemplateVo(workTemplateVo);
+        return RestModel.success(workDetailInfoVo);
 
     }
 

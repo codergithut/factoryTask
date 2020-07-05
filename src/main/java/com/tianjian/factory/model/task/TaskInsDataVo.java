@@ -8,39 +8,21 @@ import java.util.Map;
 @ApiModel
 public class TaskInsDataVo {
 
-    /**
-     * 实际子任务id
-     */
     @ApiModelProperty("实际子任务id")
     private String id;
 
-    /**
-     * 任务名称
-     */
     @ApiModelProperty("任务名称")
     private String taskName;
 
-    /**
-     * 任务模板
-     */
     @ApiModelProperty("服务器返回码")
     private TaskTemplateVo taskTemplate;
 
-    /**
-     * 当前任务数据
-     */
     @ApiModelProperty("当前任务数据")
     private Map<String, Object> datas;
 
-    /**
-     * 当前子任务状态
-     */
     @ApiModelProperty("服务器返回码")
     private String taskStatus;
 
-    /**
-     * 处理人id
-     */
     @ApiModelProperty("处理人id")
     private String handleUserId;
 

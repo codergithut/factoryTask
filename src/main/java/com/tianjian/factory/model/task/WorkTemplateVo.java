@@ -10,36 +10,25 @@ import java.util.List;
 @ApiModel
 public class WorkTemplateVo {
 
-    @ApiModelProperty("服务器返回码")
+    @ApiModelProperty("工作模板id")
     private String id;
 
-    /**
-     * 工作名称
-     */
     @ApiModelProperty("工作名称")
     private String jobName;
 
-    @ApiModelProperty("服务器返回码")
+    @ApiModelProperty("工作描述")
     private String jobDesc;
 
-    /**
-     * 任务流程模板
-     */
-    @ApiModelProperty("服务器返回码")
+    @ApiModelProperty("任务流程模板")
     private List<WorkTemplateDetailVo> subTasks;
 
-    /**
-     * 启动时间
-     */
-    @ApiModelProperty("服务器返回码")
+    @ApiModelProperty("启动时间")
     private Date startDate;
 
-    /**
-     * 结束时间
-     */
-    @ApiModelProperty("服务器返回码")
+    @ApiModelProperty("结束时间")
     private Date endDate;
 
+    @ApiModelProperty("工作节点")
     private String jobStatus;
 
     public String getId() {
