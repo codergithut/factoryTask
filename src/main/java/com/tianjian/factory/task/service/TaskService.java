@@ -301,6 +301,7 @@ public class TaskService {
             taskDetailDataVo.setTaskFlow(e.getTaskTemplateName());
             taskDetailDataVo.setSubmitTime(e.getStartDate());
             taskDetailDataVo.setUpdateTime(e.getEndDate());
+            taskDetailDataVo.setTaskDetailCode(e.getId());
             taskDetailDataVo.setBelongs(cacheService.getWorkName(e.getWorkTemplateId()));
             taskDetailDataVo.setTaskManager(cacheService.getUserName(e.getUserId()));
             if(workInsDataPo == null) {
@@ -323,10 +324,28 @@ public class TaskService {
         Optional<WorkTemplatePo> workTemplatePoOptional = workTemplateCurd.findById(workTemplateId);
         WorkTemplateVo workTemplateVo = new WorkTemplateVo();
         if(workTemplatePoOptional.isPresent()) {
-            WorkTemplatePo workTemplatePo = workTemplatePoOptional.get();
             BeanUtils.copyProperties(workTemplatePoOptional.get(), workTemplateVo);
         }
         return workTemplateVo;
     }
 
+    public TaskDetailDataVo findTaskDetailByCode(String workTemplateDetailId) {
+        WorkTemplateDetailPo workTemplateDetailPo = workTemplateDetailCurd.findById(workTemplateDetailId).get();
+        Integer orderNum = workTemplateDetailPo.getOrderNum();
+        WorkInsDataPo workInsDataPo = workInsDataCurd.findByWorkTemplateIdAndWorkStatus
+                (workTemplateDetailPo.getWorkTemplateId(), "active");
+        TaskDetailDataVo taskDetailDataVo = new TaskDetailDataVo();
+        if(workInsDataPo == null || workInsDataPo.getOrderNum() > orderNum) {
+            taskDetailDataVo.setTaskStatus("finish");
+        }else if(workInsDataPo.getOrderNum() == orderNum) {
+            taskDetailDataVo.setTaskStatus("active");
+        } else {
+            taskDetailDataVo.setTaskStatus("wait");
+        }
+        taskDetailDataVo.setTaskDetailCode(workTemplateDetailId);
+        taskDetailDataVo.setBelongs(cacheService.getWorkName(workTemplateDetailPo.getWorkTemplateId()));
+        taskDetailDataVo.setTaskFlow(cacheService.getTaskInfo(workTemplateDetailPo.getTaskTemplateId()));
+        taskDetailDataVo.setTaskManager(cacheService.getUserName(workTemplateDetailPo.getUserId()));
+        return taskDetailDataVo;
+    }
 }

@@ -138,8 +138,8 @@ public class TaskController {
 
     }
 
-    @GetMapping("/getTaskInsByWorkId")
-    public RestModel<WorkDetailInfoVo> getWorkInfo(@RequestParam("workTemplateId") String workTemplateId) {
+    @GetMapping("/getWorkDetailByWorkId")
+    public RestModel<WorkDetailInfoVo> getWorkDetailByWorkId(@RequestParam("workTemplateId") String workTemplateId) {
         WorkDetailInfoVo workDetailInfoVo = new WorkDetailInfoVo();
         WorkTemplateVo workTemplateVo = taskService.getWorkInfoById(workTemplateId);
         List<TaskDetailDataVo> taskDetailDataVos = taskService.findWorkInfoAndWorkId(workTemplateId);
@@ -147,6 +147,12 @@ public class TaskController {
         workDetailInfoVo.setWorkTemplateVo(workTemplateVo);
         return RestModel.success(workDetailInfoVo);
 
+    }
+
+    @GetMapping("/getTaskInsInfoDetailById")
+    public RestModel<TaskDetailDataVo> getTaskInsInfoDetailById(@RequestParam("taskDetailCode") String taskDetailCode) {
+        TaskDetailDataVo taskDetailDataVo = taskService.findTaskDetailByCode(taskDetailCode);
+        return RestModel.success(taskDetailDataVo);
     }
 
 

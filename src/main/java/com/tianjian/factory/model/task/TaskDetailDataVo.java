@@ -29,6 +29,17 @@ public class TaskDetailDataVo {
     @ApiModelProperty("任务状态")
     private String taskStatus;
 
+    @ApiModelProperty("子任务代码")
+    private String taskDetailCode;
+
+    public String getTaskDetailCode() {
+        return taskDetailCode;
+    }
+
+    public void setTaskDetailCode(String taskDetailCode) {
+        this.taskDetailCode = taskDetailCode;
+    }
+
     public String getTaskFlow() {
         return taskFlow;
     }
