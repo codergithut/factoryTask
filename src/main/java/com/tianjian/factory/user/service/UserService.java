@@ -106,4 +106,14 @@ public class UserService {
             return null;
         }
     }
+
+    public Boolean editUserInfo(String userName, String role) {
+        UserInfoPo userInfoPo = userInfoDataCurd.findByUserName(userName);
+        if(userInfoPo != null) {
+            userInfoPo.setRole(role);
+            userInfoDataCurd.save(userInfoPo);
+            return true;
+        }
+        return false;
+    }
 }

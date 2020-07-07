@@ -89,6 +89,14 @@ public class LoginController {
         return  result ? RestModel.success(result) : RestModel.fail("000001", "user add fail");
     }
 
+    @GetMapping("/editUserInfo")
+    public RestModel<Boolean> editUserInfo(@RequestParam("userName") String userName,
+                                           @RequestParam("role") String role) {
+        Boolean result = userService.editUserInfo(userName, role);
+        return result ? RestModel.success(result) : RestModel.fail("000001", "user add fail");
+
+    }
+
     @GetMapping("/getUserByToken")
     public RestModel<UserInfoVo> getUserByToken() {
         String openid = request.getHeader("openid");
