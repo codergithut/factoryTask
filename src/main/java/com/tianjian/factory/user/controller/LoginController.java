@@ -80,20 +80,20 @@ public class LoginController {
         if(userInfoVo.getDepartMentName() == null ||
                 userInfoVo.getUserName() == null ||
                 userInfoVo.getTelPhoneNum() == null){
-            return RestModel.fail("000001", "use info error");
+            return RestModel.fail("000000", "use info error");
         }
         String openid = request.getHeader("openid");
         userInfoVo.setOpenid(openid);
         userInfoVo.setRole("null");
         Boolean result =  userService.saveUserInfo(userInfoVo);
-        return  result ? RestModel.success(result) : RestModel.fail("000001", "user add fail");
+        return  result ? RestModel.success(result) : RestModel.fail("000000", "user add fail");
     }
 
     @GetMapping("/editUserInfo")
     public RestModel<Boolean> editUserInfo(@RequestParam("userName") String userName,
                                            @RequestParam("role") String role) {
         Boolean result = userService.editUserInfo(userName, role);
-        return result ? RestModel.success(result) : RestModel.fail("000001", "user add fail");
+        return result ? RestModel.success(result) : RestModel.fail("000000", "user add fail");
 
     }
 
@@ -112,7 +112,7 @@ public class LoginController {
     public RestModel<List<UserInfoVo>> getUserByDepartMentId(@RequestParam("departMentName") String departMentName) {
         List<UserInfoVo> userInfoVos = userService.findByDepartMentName(departMentName);
         if(CollectionUtils.isEmpty(userInfoVos)) {
-            return RestModel.fail("000001", "get data fail");
+            return RestModel.fail("000000", "get data fail");
         }
         return RestModel.success(userInfoVos);
     }
@@ -121,7 +121,7 @@ public class LoginController {
     public RestModel<List<UserInfoVo>> getAllUser() {
         List<UserInfoVo> userInfoVos = userService.findAllUser();
         if(CollectionUtils.isEmpty(userInfoVos)) {
-            return RestModel.fail("000001", "get data fail");
+            return RestModel.fail("000000", "get data fail");
         }
         return RestModel.success(userInfoVos);
     }
@@ -130,7 +130,7 @@ public class LoginController {
     public RestModel<UserInfoVo> getUserInfoByUserId(@RequestParam("userId") String userId) {
         UserInfoVo userInfoVo = userService.findByUserId(userId);
         if(userInfoVo == null) {
-            return RestModel.fail("000001", "can not find user info");
+            return RestModel.fail("000000", "can not find user info");
         }
         return RestModel.success(userInfoVo);
     }

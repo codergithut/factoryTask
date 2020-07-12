@@ -245,6 +245,7 @@ public class TaskService {
             WorkTemplateVo workTemplateVo = new WorkTemplateVo();
             WorkTemplatePo workTemplatePo = workTemplateCurd.findById(e.getWorkTemplateId()).get();
             BeanUtils.copyProperties(workTemplatePo, workTemplateVo);
+            workTemplateVo.setJobStatus("active");
             return workTemplateVo;
         }).collect(Collectors.toList());
     }
