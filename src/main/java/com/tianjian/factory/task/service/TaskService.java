@@ -258,8 +258,14 @@ public class TaskService {
             WorkTemplateVo workTemplateVo = new WorkTemplateVo();
             BeanUtils.copyProperties(e, workTemplateVo);
             String workTemplateId = e.getId();
-            WorkInsDataPo workInsDataPo = workInsDataCurd.findByWorkTemplateId(workTemplateId);
-            workTemplateVo.setJobStatus(workInsDataPo.getWorkStatus());
+            List<WorkInsDataPo> workInsDataPos = workInsDataCurd.findByWorkTemplateId(workTemplateId);
+            Optional<WorkInsDataPo> workInsDatas = workInsDataPos.stream().filter(work -> !work.getWorkStatus()
+                    .equals("reject")).findAny();
+            if(workInsDatas.isPresent()) {
+                workTemplateVo.setJobStatus(workInsDatas.get().getWorkStatus());
+            } else {
+                workTemplateVo.setJobStatus("reject");
+            }
             return workTemplateVo;
         }).collect(Collectors.toList());
     }
@@ -347,5 +353,22 @@ public class TaskService {
         taskDetailDataVo.setTaskFlow(cacheService.getTaskInfo(workTemplateDetailPo.getTaskTemplateId()));
         taskDetailDataVo.setTaskManager(cacheService.getUserName(workTemplateDetailPo.getUserId()));
         return taskDetailDataVo;
+    }
+
+    public boolean bossSubmitWork(String workDetailTemplateCode) {
+        WorkTemplateDetailPo workTemplateDetailPo = workTemplateDetailCurd.findById(workDetailTemplateCode).get();
+        if(workTemplateDetailPo != null) {
+            return workSubmit(workTemplateDetailPo.getWorkTemplateId());
+        }
+        return false;
+    }
+
+    public boolean bosssRejectWork(String workDetailTemplateCode) {
+        WorkTemplateDetailPo workTemplateDetailPo = workTemplateDetailCurd.findById(workDetailTemplateCode).get();
+        if(workTemplateDetailPo != null) {
+            return workReject(workTemplateDetailPo.getWorkTemplateId(), workTemplateDetailPo.getOrderNum());
+        }
+        return false;
+
     }
 }

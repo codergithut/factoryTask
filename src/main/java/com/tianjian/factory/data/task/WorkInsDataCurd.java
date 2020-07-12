@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.List;
 
 public interface WorkInsDataCurd extends CrudRepository<WorkInsDataPo, String> {
-    WorkInsDataPo findByWorkTemplateId(String workTemplateId);
+    List<WorkInsDataPo> findByWorkTemplateId(String workTemplateId);
 
     List<WorkInsDataPo> findByHanderUserIdAndWorkStatus(String userId, String wait);
 

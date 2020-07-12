@@ -118,15 +118,20 @@ public class TaskController {
     }
 
     @GetMapping("/submitWork")
-    public RestModel<Boolean> submitWork(@RequestParam("workTemplateId") String workTemplateId) {
-        boolean result = taskService.workSubmit(workTemplateId);
+    public RestModel<Boolean> submitWork(@RequestParam("workTemplateId") String workDetailCode) {
+        boolean result = taskService.workSubmit(workDetailCode);
+        return result ? success(result) : RestModel.fail("000001", "start work fail");
+    }
+
+    @GetMapping("/bossSubmitWork")
+    public RestModel<Boolean> bossSubmitWork(@RequestParam("workDetailCode") String workDetailCode) {
+        boolean result = taskService.bossSubmitWork(workDetailCode);
         return result ? success(result) : RestModel.fail("000001", "start work fail");
     }
 
     @GetMapping("/rejectWork")
-    public RestModel<Boolean> rejectWork(@RequestParam("workTemplateId") String workTemplateId,
-                                @RequestParam("orderNum") Integer orderNum) {
-        boolean result = taskService.workReject(workTemplateId, orderNum);
+    public RestModel<Boolean> rejectWork(@RequestParam("workDetailCode") String workDetailCode) {
+        boolean result = taskService.bosssRejectWork(workDetailCode);
         return result ? success(result) : RestModel.fail("000001", "start work fail");
     }
 
