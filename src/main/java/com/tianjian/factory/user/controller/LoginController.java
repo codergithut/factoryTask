@@ -64,10 +64,6 @@ public class LoginController {
             userInfo.setOpenid(openid);
         }
         data.put("openid", openid);
-//        data.put("userInfo", userInfo);
-        System.out.println("=========================");
-        System.out.println(openid);
-        System.out.println(JSONObject.toJSONString(RestModel.success(data)));
         return RestModel.success(data);
 
     }

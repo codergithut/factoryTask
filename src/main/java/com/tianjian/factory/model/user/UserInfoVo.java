@@ -44,7 +44,7 @@ public class UserInfoVo {
     /**
      * 用户角色
      */
-    @ApiModelProperty("openid")
+    @ApiModelProperty("role")
     private String role;
 
 
