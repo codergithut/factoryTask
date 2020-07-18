@@ -309,6 +309,7 @@ public class TaskService {
             taskDetailDataVo.setSubmitTime(e.getStartDate());
             taskDetailDataVo.setUpdateTime(e.getEndDate());
             taskDetailDataVo.setTaskDetailCode(e.getId());
+            taskDetailDataVo.setOrderNum(e.getOrderNum());
             taskDetailDataVo.setBelongs(cacheService.getWorkName(e.getWorkTemplateId()));
             taskDetailDataVo.setTaskManager(cacheService.getUserName(e.getUserId()));
             if(workInsDataPo == null) {

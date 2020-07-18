@@ -32,6 +32,9 @@ public class TaskDetailDataVo {
     @ApiModelProperty("子任务代码")
     private String taskDetailCode;
 
+    @ApiModelProperty("顺序")
+    private Integer orderNum;
+
     public String getTaskDetailCode() {
         return taskDetailCode;
     }
@@ -86,5 +89,13 @@ public class TaskDetailDataVo {
 
     public void setTaskStatus(String taskStatus) {
         this.taskStatus = taskStatus;
+    }
+
+    public Integer getOrderNum() {
+        return orderNum;
+    }
+
+    public void setOrderNum(Integer orderNum) {
+        this.orderNum = orderNum;
     }
 }

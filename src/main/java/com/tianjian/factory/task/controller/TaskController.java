@@ -93,6 +93,7 @@ public class TaskController {
     @GetMapping("/getMyWorks")
     public RestModel<List<WorkTemplateVo>> getMyWork() {
         String userId = RequestUtil.getUserCodeBySession(request);
+
         List<WorkTemplateVo> workTemplateVos = taskService.getMyWork(userId);
         if(CollectionUtils.isEmpty(workTemplateVos)) {
             return RestModel.fail("000000", "get work fail");
