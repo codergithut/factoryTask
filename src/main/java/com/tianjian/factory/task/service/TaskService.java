@@ -181,7 +181,6 @@ public class TaskService {
 
         if(orderNum == 0) {
             workInsDataPo = workInsDataCurd.findByWorkTemplateIdAndWorkStatusNot(workTemplateId,"reject");
-            workInsDataPo.setUpdateTime(new Date());
             if(workInsDataPo != null) {
                 return false;
             }
@@ -192,6 +191,7 @@ public class TaskService {
             List<WorkTemplateDetailPo> workTemplateDetailPos = workTemplateDetailCurd.findByWorkTemplateId(workTemplateId);
             workInsDataPo.setTotalTaskNum(workTemplateDetailPos.size() -1);
         } else {
+            workInsDataPo.setUpdateTime(new Date());
             workInsDataPo = workInsDataCurd.findByWorkTemplateIdAndWorkStatus(workTemplateId,"active");
         }
 
