@@ -35,6 +35,8 @@ public class TaskService {
                 BeanUtils.copyProperties(taskTemplateTypeMetaDetailVo, taskTemplateTypeMetaPo);
                 taskTemplateTypeMetaPo.setTaskTemplateType(taskTemplateTypeMetaVo.getTaskTemplateType());
                 taskTemplateTypeMetaPo.setId(UUID.randomUUID().toString());
+                taskTemplateTypeMetaPo.setCreateTime(new Date());
+                taskTemplateTypeMetaPo.setUpdateTime(new Date());
                 taskTemplateTypeMetaPos.add(taskTemplateTypeMetaPo);
             }
         }
@@ -79,6 +81,8 @@ public class TaskService {
         BeanUtils.copyProperties(taskTemplateVo, taskTemplatePo);
         taskTemplatePo.setTaskTemplateName(taskTemplateVo.getTaskName());
         taskTemplatePo.setId(UUID.randomUUID().toString());
+        taskTemplatePo.setCreateTime(new Date());
+        taskTemplatePo.setUpdateTime(new Date());
         taskTemplatePo.setTaskTemplateTypes(JSON.toJSONString(taskTemplateVo.getTaskTemplateTypes()));
         return taskTemplateCurd.save(taskTemplatePo) != null;
     }
@@ -121,6 +125,8 @@ public class TaskService {
     public boolean saveWorkTemplateVo(WorkTemplateVo workTemplateVo) {
         //模板基础数据添加
         WorkTemplatePo workTemplatePo = new WorkTemplatePo();
+        workTemplatePo.setCreateTime(new Date());
+        workTemplatePo.setUpdateTime(new Date());
         BeanUtils.copyProperties(workTemplateVo, workTemplatePo);
         workTemplatePo.setId(UUID.randomUUID().toString());
         List<WorkTemplateDetailVo> workTemplateDetailVos = workTemplateVo.getSubTasks();
@@ -133,6 +139,8 @@ public class TaskService {
             workTemplateDetailPo.setId(UUID.randomUUID().toString());
             workTemplateDetailPo.setOrderNum(orderNum++);
             workTemplateDetailPo.setWorkTemplateId(workTemplatePo.getId());
+            workTemplateDetailPo.setUpdateTime(new Date());
+            workTemplateDetailPo.setCreateTime(new Date());
             workTemplateDetailPos.add(workTemplateDetailPo);
         }
         return workTemplateDetailCurd.saveAll(workTemplateDetailPos) != null
@@ -166,15 +174,20 @@ public class TaskService {
         taskInsDataPo.setResourceId(UUID.randomUUID().toString());
         taskInsDataPo.setTaskTemplateName(workTemplateDetailPo.getTaskTemplateName());
         taskInsDataPo.setWorkTemplateId(workTemplateId);
+        taskInsDataPo.setCreateTime(new Date());
+        taskInsDataPo.setUpdateTime(new Date());
 
         WorkInsDataPo workInsDataPo = null;
 
         if(orderNum == 0) {
             workInsDataPo = workInsDataCurd.findByWorkTemplateIdAndWorkStatusNot(workTemplateId,"reject");
+            workInsDataPo.setUpdateTime(new Date());
             if(workInsDataPo != null) {
                 return false;
             }
             workInsDataPo = new WorkInsDataPo();
+            workInsDataPo.setCreateTime(new Date());
+            workInsDataPo.setUpdateTime(new Date());
             workInsDataPo.setId(UUID.randomUUID().toString());
             List<WorkTemplateDetailPo> workTemplateDetailPos = workTemplateDetailCurd.findByWorkTemplateId(workTemplateId);
             workInsDataPo.setTotalTaskNum(workTemplateDetailPos.size() -1);
@@ -198,6 +211,7 @@ public class TaskService {
         WorkInsDataPo workInsDataPo = workInsDataCurd.findByWorkTemplateIdAndWorkStatus(workTemplateId, "active");
         if(workInsDataPo.getOrderNum() == workInsDataPo.getTotalTaskNum()) {
             workInsDataPo.setWorkStatus("finish");
+            workInsDataPo.setUpdateTime(new Date());
             workInsDataCurd.save(workInsDataPo);
             return true;
         }
@@ -206,6 +220,7 @@ public class TaskService {
 
     public boolean workReject(String workTemplateId, int orderNum) {
         WorkInsDataPo workInsDataPo = workInsDataCurd.findByWorkTemplateIdAndWorkStatusNot(workTemplateId, "reject");
+        workInsDataPo.setUpdateTime(new Date());
         List<TaskInsDataPo> taskInsDataPos = taskInsDataCurd.findByWorkTemplateId(workTemplateId);
         if(workInsDataPo == null || CollectionUtils.isEmpty(taskInsDataPos) || taskInsDataPos.size() < orderNum -1) {
             return false;
@@ -217,6 +232,7 @@ public class TaskService {
         for(int i = orderNum; i < taskInsDataPos.size(); i++) {
             TaskInsDataPo rejectData = taskInsDataPos.get(i);
             rejectData.setTaskStatus("reject");
+            rejectData.setUpdateTime(new Date());
             rejectTaskInsDataPos.add(rejectData);
         }
         taskInsDataCurd.saveAll(rejectTaskInsDataPos);
@@ -350,6 +366,8 @@ public class TaskService {
         } else {
             taskDetailDataVo.setTaskStatus("wait");
         }
+        taskDetailDataVo.setUpdateTime(workTemplateDetailPo.getUpdateTime());
+        taskDetailDataVo.setSubmitTime(workInsDataPo.getCreateTime());
         taskDetailDataVo.setTaskDetailCode(workTemplateDetailId);
         taskDetailDataVo.setBelongs(cacheService.getWorkName(workTemplateDetailPo.getWorkTemplateId()));
         taskDetailDataVo.setTaskFlow(cacheService.getTaskInfo(workTemplateDetailPo.getTaskTemplateId()));

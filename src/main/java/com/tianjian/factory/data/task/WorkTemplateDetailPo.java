@@ -56,6 +56,16 @@ public class WorkTemplateDetailPo {
      */
     private Integer orderNum;
 
+    /**
+     * 创建时间
+     */
+    private Date createTime;
+
+    /**
+     * 更新时间
+     */
+    private Date updateTime;
+
     public String getId() {
         return id;
     }
@@ -110,5 +120,21 @@ public class WorkTemplateDetailPo {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }

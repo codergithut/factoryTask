@@ -1,7 +1,10 @@
 package com.tianjian.factory.data.task;
 
+import org.hibernate.exception.DataException;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.Date;
 
 @Entity
 public class TaskTemplateTypeMetaPo {
@@ -31,6 +34,16 @@ public class TaskTemplateTypeMetaPo {
      * 是否必填
      */
     private String isRequired;
+
+    /**
+     * 创建时间
+     */
+    private Date createTime;
+
+    /**
+     * 更新时间
+     */
+    private Date updateTime;
 
 
     public String getId() {
@@ -71,5 +84,21 @@ public class TaskTemplateTypeMetaPo {
 
     public void setIsRequired(String isRequired) {
         this.isRequired = isRequired;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 }
