@@ -288,6 +288,7 @@ public class TaskService {
             Optional<WorkInsDataPo> workInsDatas = workInsDataPos.stream().filter(work -> !work.getWorkStatus()
                     .equals("reject")).findAny();
             if(workInsDatas.isPresent()) {
+                workTemplateVo.setUpdateTime(workInsDatas.get().getUpdateTime());
                 workTemplateVo.setJobStatus(workInsDatas.get().getWorkStatus());
             } else {
                 workTemplateVo.setJobStatus("reject");
@@ -372,11 +373,11 @@ public class TaskService {
             taskDetailDataVo.setTaskStatus("finish");
         }else if(workInsDataPo.getOrderNum() == orderNum) {
             taskDetailDataVo.setTaskStatus("active");
+            taskDetailDataVo.setSubmitTime(workInsDataPo.getCreateTime());
         } else {
             taskDetailDataVo.setTaskStatus("wait");
         }
         taskDetailDataVo.setUpdateTime(workTemplateDetailPo.getUpdateTime());
-        taskDetailDataVo.setSubmitTime(workInsDataPo.getCreateTime());
         taskDetailDataVo.setTaskDetailCode(workTemplateDetailId);
         taskDetailDataVo.setBelongs(cacheService.getWorkName(workTemplateDetailPo.getWorkTemplateId()));
         taskDetailDataVo.setTaskFlow(cacheService.getTaskInfo(workTemplateDetailPo.getTaskTemplateId()));
