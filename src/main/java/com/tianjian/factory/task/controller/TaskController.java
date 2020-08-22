@@ -5,6 +5,7 @@ import com.tianjian.factory.model.common.RestModel;
 import com.tianjian.factory.model.task.*;
 import com.tianjian.factory.task.service.TaskService;
 import com.tianjian.factory.util.RequestUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import static com.tianjian.factory.model.common.RestModel.success;
 
 @RequestMapping("/task")
 @RestController
+@Slf4j
 public class TaskController {
 
     @Autowired
@@ -121,6 +123,7 @@ public class TaskController {
     @GetMapping("/submitWork")
     public RestModel<Boolean> submitWork(@RequestParam("workTemplateId") String workDetailCode) {
         boolean result = taskService.workSubmit(workDetailCode);
+        log.info("submitWork param is {}", workDetailCode);
         return result ? success(result) : RestModel.fail("000000", "start work fail");
     }
 

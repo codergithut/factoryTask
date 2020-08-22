@@ -195,8 +195,8 @@ public class TaskService {
             List<WorkTemplateDetailPo> workTemplateDetailPos = workTemplateDetailCurd.findByWorkTemplateId(workTemplateId);
             workInsDataPo.setTotalTaskNum(workTemplateDetailPos.size() -1);
         } else {
-            workInsDataPo.setUpdateTime(new Date());
             workInsDataPo = workInsDataCurd.findByWorkTemplateIdAndWorkStatus(workTemplateId,"active");
+            workInsDataPo.setUpdateTime(new Date());
         }
 
         workInsDataPo.setWorkTemplateId(workTemplateId);
@@ -209,7 +209,7 @@ public class TaskService {
     }
 
     public boolean workSubmit(String workTemplateId) {
-        log.info("work submit param is {}", workTemplateId);
+        log.warn("work submit param is {}", workTemplateId);
         TaskInsDataPo taskInsDataPo = taskInsDataCurd.findByWorkTemplateIdAndTaskStatus(workTemplateId, "active");
         taskInsDataPo.setTaskStatus("finish");
         taskInsDataCurd.save(taskInsDataPo);
