@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.tianjian.factory.cache.CacheService;
 import com.tianjian.factory.data.task.*;
 import com.tianjian.factory.model.task.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class TaskService {
 
     @Autowired
@@ -207,6 +209,7 @@ public class TaskService {
     }
 
     public boolean workSubmit(String workTemplateId) {
+        log.warn("work submit param is {}", workTemplateId);
         TaskInsDataPo taskInsDataPo = taskInsDataCurd.findByWorkTemplateIdAndTaskStatus(workTemplateId, "active");
         taskInsDataPo.setTaskStatus("finish");
         taskInsDataCurd.save(taskInsDataPo);
