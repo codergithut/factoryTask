@@ -209,7 +209,7 @@ public class TaskService {
     }
 
     public boolean workSubmit(String workTemplateId) {
-        log.warn("work submit param is {}", workTemplateId);
+        log.info("work submit param is {}", workTemplateId);
         TaskInsDataPo taskInsDataPo = taskInsDataCurd.findByWorkTemplateIdAndTaskStatus(workTemplateId, "active");
         taskInsDataPo.setTaskStatus("finish");
         taskInsDataCurd.save(taskInsDataPo);
