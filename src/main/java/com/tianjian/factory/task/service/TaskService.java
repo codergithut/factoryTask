@@ -125,9 +125,11 @@ public class TaskService {
     public boolean saveWorkTemplateVo(WorkTemplateVo workTemplateVo) {
         //模板基础数据添加
         WorkTemplatePo workTemplatePo = new WorkTemplatePo();
+        BeanUtils.copyProperties(workTemplateVo, workTemplatePo);
         workTemplatePo.setCreateTime(new Date());
         workTemplatePo.setUpdateTime(new Date());
-        BeanUtils.copyProperties(workTemplateVo, workTemplatePo);
+        workTemplatePo.setStartDate(new Date());
+        workTemplatePo.setEndDate(workTemplateVo.getEndDate());
         workTemplatePo.setId(UUID.randomUUID().toString());
         List<WorkTemplateDetailVo> workTemplateDetailVos = workTemplateVo.getSubTasks();
         List<WorkTemplateDetailPo> workTemplateDetailPos = new ArrayList<>();
