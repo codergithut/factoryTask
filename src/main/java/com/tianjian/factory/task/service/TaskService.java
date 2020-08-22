@@ -257,6 +257,8 @@ public class TaskService {
         if(CollectionUtils.isEmpty(workInsDataPos)) {
             return null;
         }
+        workInsDataPos = workInsDataPos.stream().sorted(Comparator.comparing(WorkInsDataPo::getCreateTime))
+                .collect(Collectors.toList());
         return workInsDataPos.stream().map(e -> {
             WorkTemplateVo workTemplateVo = new WorkTemplateVo();
             WorkTemplatePo workTemplatePo = workTemplateCurd.findById(e.getWorkTemplateId()).get();
@@ -271,6 +273,8 @@ public class TaskService {
         if(CollectionUtils.isEmpty(workTemplatePos)) {
             return null;
         }
+        workTemplatePos.stream().sorted(Comparator
+                .comparing(WorkTemplatePo::getCreateTime)).collect(Collectors.toList());
         return workTemplatePos.stream().map(e -> {
             WorkTemplateVo workTemplateVo = new WorkTemplateVo();
             BeanUtils.copyProperties(e, workTemplateVo);
