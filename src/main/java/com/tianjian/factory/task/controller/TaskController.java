@@ -49,6 +49,11 @@ public class TaskController {
         return success(taskTemplateTypeMetaVo);
     }
 
+    @GetMapping("/getAllTaskTemplateTypeMetaInfo")
+    public RestModel<List<TaskTemplateTypeMetaVo>> getAllTaskTemplateTypeMeta() {
+        return success(taskService.getAllTaskTempalteType());
+    }
+
     /**
      * 查询已有的元数据模板
      */

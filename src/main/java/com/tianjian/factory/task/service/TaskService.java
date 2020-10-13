@@ -58,6 +58,10 @@ public class TaskService {
         return getTaskTemplateTypeMetaVoByTaskTemplateType(taskTemplateType);
     }
 
+    public List<TaskTemplateTypeMetaVo> getAllTaskTempalteType() {
+        return getTaskTemplateTypeMetaVos();
+    }
+
     /**
      * 查找所有的模板外置数据类型节点
      * @return
@@ -255,6 +259,14 @@ public class TaskService {
         taskTemplateTypeMetaVo.setTaskTemplateType(taskTemplateType);
         taskTemplateTypeMetaVo.setTaskTemplateTypeMetaDetails(taskTemplateTypeMetaDetailVos);
         return taskTemplateTypeMetaVo;
+    }
+
+    private List<TaskTemplateTypeMetaVo> getTaskTemplateTypeMetaVos() {
+        List<TaskTemplateTypeMetaPo> taskTemplateTypeMetaPos = (List<TaskTemplateTypeMetaPo>)
+                taskTemplateTypeMetaCurd.findAll();
+        return taskTemplateTypeMetaPos.stream().map(e -> e.getMetaType()).collect(Collectors.toSet()).stream().map(ee -> {
+            return getTaskTemplateTypeMetaVoByTaskTemplateType(ee);
+        }).collect(Collectors.toList());
     }
 
     public List<WorkTemplateVo> getMyWork(String userId) {
