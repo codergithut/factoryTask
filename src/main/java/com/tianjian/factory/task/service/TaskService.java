@@ -187,22 +187,20 @@ public class TaskService {
 
         WorkInsDataPo workInsDataPo = null;
 
+        workInsDataPo = workInsDataCurd.findByWorkTemplateIdAndWorkStatus(workTemplateId,"active");
+
         if(orderNum == 0) {
-            workInsDataPo = workInsDataCurd.findByWorkTemplateIdAndWorkStatusNot(workTemplateId,"reject");
-            if(workInsDataPo != null) {
-                return false;
+            if(workInsDataPo == null) {
+                workInsDataPo = new WorkInsDataPo();
+                workInsDataPo.setCreateTime(new Date());
+                workInsDataPo.setUpdateTime(new Date());
+                workInsDataPo.setId(UUID.randomUUID().toString());
+                List<WorkTemplateDetailPo> workTemplateDetailPos = workTemplateDetailCurd.findByWorkTemplateId(workTemplateId);
+                workInsDataPo.setTotalTaskNum(workTemplateDetailPos.size() -1);
             }
-            workInsDataPo = new WorkInsDataPo();
-            workInsDataPo.setCreateTime(new Date());
-            workInsDataPo.setUpdateTime(new Date());
-            workInsDataPo.setId(UUID.randomUUID().toString());
-            List<WorkTemplateDetailPo> workTemplateDetailPos = workTemplateDetailCurd.findByWorkTemplateId(workTemplateId);
-            workInsDataPo.setTotalTaskNum(workTemplateDetailPos.size() -1);
         } else {
-            workInsDataPo = workInsDataCurd.findByWorkTemplateIdAndWorkStatus(workTemplateId,"active");
             workInsDataPo.setUpdateTime(new Date());
         }
-
         workInsDataPo.setWorkTemplateId(workTemplateId);
         workInsDataPo.setCurrentTaskTemplateId(workTemplateDetailPo.getTaskTemplateId());
         workInsDataPo.setOrderNum(orderNum);
@@ -235,7 +233,7 @@ public class TaskService {
             return false;
         }
         List<TaskInsDataPo> rejectTaskInsDataPos = new ArrayList<>();
-        workInsDataPo.setWorkStatus("reject");
+        workInsDataPo.setWorkStatus("active");
         workInsDataPo.setOrderNum(orderNum);
         workInsDataCurd.save(workInsDataPo);
         for(int i = orderNum; i < taskInsDataPos.size(); i++) {
