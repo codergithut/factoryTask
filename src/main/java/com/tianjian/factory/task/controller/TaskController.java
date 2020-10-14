@@ -1,6 +1,8 @@
 package com.tianjian.factory.task.controller;
 
 
+import com.alibaba.fastjson.JSON;
+import com.tianjian.factory.data.task.WorkTemplateDetailPo;
 import com.tianjian.factory.model.common.RestModel;
 import com.tianjian.factory.model.task.*;
 import com.tianjian.factory.task.service.TaskService;
@@ -11,6 +13,8 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -168,6 +172,4 @@ public class TaskController {
         TaskDetailDataVo taskDetailDataVo = taskService.findTaskDetailByCode(taskDetailCode);
         return RestModel.success(taskDetailDataVo);
     }
-
-
 }
