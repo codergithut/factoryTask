@@ -28,19 +28,17 @@ public class TaskService {
      * @param taskTemplateTypeMetaVos
      * @return
      */
-    public boolean saveTaskTemplateTypeMeta(List<TaskTemplateTypeMetaVo> taskTemplateTypeMetaVos) {
+    public boolean saveTaskTemplateTypeMeta(TaskTemplateTypeMetaVo taskTemplateTypeMetaVo) {
         List<TaskTemplateTypeMetaPo> taskTemplateTypeMetaPos = new ArrayList<>();
-        for(TaskTemplateTypeMetaVo taskTemplateTypeMetaVo : taskTemplateTypeMetaVos) {
-            List<TaskTemplateTypeMetaDetailVo> taskTemplateTypeMetaDetailVos = taskTemplateTypeMetaVo.getTaskTemplateTypeMetaDetails();
-            for(TaskTemplateTypeMetaDetailVo taskTemplateTypeMetaDetailVo : taskTemplateTypeMetaDetailVos) {
-                TaskTemplateTypeMetaPo taskTemplateTypeMetaPo = new TaskTemplateTypeMetaPo();
-                BeanUtils.copyProperties(taskTemplateTypeMetaDetailVo, taskTemplateTypeMetaPo);
-                taskTemplateTypeMetaPo.setTaskTemplateType(taskTemplateTypeMetaVo.getTaskTemplateType());
-                taskTemplateTypeMetaPo.setId(UUID.randomUUID().toString());
-                taskTemplateTypeMetaPo.setCreateTime(new Date());
-                taskTemplateTypeMetaPo.setUpdateTime(new Date());
-                taskTemplateTypeMetaPos.add(taskTemplateTypeMetaPo);
-            }
+        List<TaskTemplateTypeMetaDetailVo> taskTemplateTypeMetaDetailVos = taskTemplateTypeMetaVo.getTaskTemplateTypeMetaDetails();
+        for(TaskTemplateTypeMetaDetailVo taskTemplateTypeMetaDetailVo : taskTemplateTypeMetaDetailVos) {
+            TaskTemplateTypeMetaPo taskTemplateTypeMetaPo = new TaskTemplateTypeMetaPo();
+            BeanUtils.copyProperties(taskTemplateTypeMetaDetailVo, taskTemplateTypeMetaPo);
+            taskTemplateTypeMetaPo.setTaskTemplateType(taskTemplateTypeMetaVo.getTaskTemplateType());
+            taskTemplateTypeMetaPo.setId(UUID.randomUUID().toString());
+            taskTemplateTypeMetaPo.setCreateTime(new Date());
+            taskTemplateTypeMetaPo.setUpdateTime(new Date());
+            taskTemplateTypeMetaPos.add(taskTemplateTypeMetaPo);
         }
         if(CollectionUtils.isEmpty(taskTemplateTypeMetaPos)) {
             return false;

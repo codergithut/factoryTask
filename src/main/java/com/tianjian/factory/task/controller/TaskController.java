@@ -33,13 +33,13 @@ public class TaskController {
 
     /**
      * 创建模板元数据
-     * @param taskTemplateTypeMetaVos
+     * @param taskTemplateTypeMetaVo
      * @return
      */
     @PostMapping("/createTaskTemplateTypeMeta")
     @ApiOperation(value = "创建元数据", notes = "创建元数据", httpMethod = "POST")
-    public RestModel<Boolean> createTaskTemplateTypeMeta(@RequestBody List<TaskTemplateTypeMetaVo> taskTemplateTypeMetaVos) {
-        boolean result = taskService.saveTaskTemplateTypeMeta(taskTemplateTypeMetaVos);
+    public RestModel<Boolean> createTaskTemplateTypeMeta(@RequestBody TaskTemplateTypeMetaVo taskTemplateTypeMetaVo) {
+        boolean result = taskService.saveTaskTemplateTypeMeta(taskTemplateTypeMetaVo);
         return result ? success(result) : RestModel.fail("000000", "create fail");
     }
 
