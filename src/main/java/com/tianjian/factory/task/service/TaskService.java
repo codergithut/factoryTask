@@ -134,7 +134,7 @@ public class TaskService {
         BeanUtils.copyProperties(workTemplateVo, workTemplatePo);
         workTemplatePo.setCreateTime(new Date());
         workTemplatePo.setUpdateTime(new Date());
-        workTemplatePo.setStartDate(new Date());
+        workTemplatePo.setStartDate(workTemplateVo.getStartDate());
         workTemplatePo.setEndDate(workTemplateVo.getEndDate());
         workTemplatePo.setId(UUID.randomUUID().toString());
         List<WorkTemplateDetailVo> workTemplateDetailVos = workTemplateVo.getSubTasks();
