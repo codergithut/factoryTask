@@ -1,6 +1,7 @@
 package com.tianjian.factory.task.controller;
 
 
+import com.alibaba.fastjson.JSON;
 import com.tianjian.factory.model.common.RestModel;
 import com.tianjian.factory.model.task.*;
 import com.tianjian.factory.task.service.TaskService;
@@ -94,6 +95,7 @@ public class TaskController {
     @PostMapping("/createWorkTemplate")
     @ApiOperation(value = "创建工作模板", notes = "创建工作模板", httpMethod = "POST")
     public RestModel<Boolean> createWorkTemplate(@RequestBody WorkTemplateVo workTemplateVo) {
+        log.info("----" + JSON.toJSONString(workTemplateVo));
         boolean result = taskService.saveWorkTemplateVo(workTemplateVo);
         return result ? success(result) : RestModel.fail("000000", "create work template fail");
     }
