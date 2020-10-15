@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
 
-@ApiModel
+@ApiModel("工作模板细节数据")
 public class WorkTemplateDetailVo {
 
     @ApiModelProperty("当前子任务开始时间")

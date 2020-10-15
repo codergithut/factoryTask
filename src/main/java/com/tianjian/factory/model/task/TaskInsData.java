@@ -5,43 +5,43 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Map;
 
-@ApiModel
+@ApiModel("任务数据")
 public class TaskInsData {
 
     /**
      * 实际子任务id
      */
-    @ApiModelProperty("服务器返回码")
+    @ApiModelProperty("编号")
     private String id;
 
     /**
      * 任务名称
      */
-    @ApiModelProperty("服务器返回码")
+    @ApiModelProperty("任务名称")
     private String taskName;
 
     /**
      * 任务模板
      */
-    @ApiModelProperty("服务器返回码")
+    @ApiModelProperty("任务模板")
     private TaskTemplateVo taskTemplate;
 
     /**
      * 当前任务数据
      */
-    @ApiModelProperty("服务器返回码")
+    @ApiModelProperty("当前任务数据")
     private Map<String, Object> datas;
 
     /**
      * 当前子任务状态
      */
-    @ApiModelProperty("服务器返回码")
+    @ApiModelProperty("当前任务状态")
     private String taskStatus;
 
     /**
      * 处理人id
      */
-    @ApiModelProperty("服务器返回码")
+    @ApiModelProperty("处理人用户id")
     private String handleUserId;
 
     public String getId() {

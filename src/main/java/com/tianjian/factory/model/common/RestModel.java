@@ -1,12 +1,19 @@
 package com.tianjian.factory.model.common;
 
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel
 public class RestModel<T> {
 
+    @ApiModelProperty("返回编码")
     private String code;
 
+    @ApiModelProperty("返回值")
     private T data;
 
+    @ApiModelProperty("返回消息")
     private String msg;
 
     public RestModel(String code, T data, String msg) {

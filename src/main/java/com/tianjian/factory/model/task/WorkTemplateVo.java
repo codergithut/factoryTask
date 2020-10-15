@@ -1,6 +1,5 @@
 package com.tianjian.factory.model.task;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -8,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@ApiModel
+@ApiModel("工作模板视图")
 public class WorkTemplateVo {
 
     @ApiModelProperty("工作模板id")
@@ -24,22 +23,18 @@ public class WorkTemplateVo {
     private List<WorkTemplateDetailVo> subTasks;
 
     @ApiModelProperty("启动时间")
-    @JsonFormat(pattern="yyyy-MM-dd")
     private Date startDate;
 
     @ApiModelProperty("结束时间")
-    @JsonFormat(pattern="yyyy-MM-dd")
     private Date endDate;
 
     @ApiModelProperty("创建时间")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     @ApiModelProperty("更新时间")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
-    @ApiModelProperty("工作节点")
+    @ApiModelProperty("工作状态")
     private String jobStatus;
 
     public String getId() {

@@ -1,22 +1,32 @@
 package com.tianjian.factory.model.task;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 
 /**
  * Created by tianjian on 2020/6/27.
  */
+@ApiModel("任务细节")
 public class WorkDetailDataVo {
 
+    @ApiModelProperty("模板id")
     private String taskFlow;
 
+    @ApiModelProperty("工作名称")
     private String workName;
 
+    @ApiModelProperty("提交时间")
     private Date submitTime;
 
+    @ApiModelProperty("更新时间")
     private Date updateTime;
 
+    @ApiModelProperty("task管理人")
     private String taskManager;
 
+    @ApiModelProperty("所属任务")
     private String belongs;
 
     public String getTaskFlow() {
