@@ -40,7 +40,7 @@ public class TaskController {
     @ApiOperation(value = "创建元数据", notes = "创建元数据", httpMethod = "POST")
     public RestModel<Boolean> createTaskTemplateTypeMeta(@RequestBody TaskTemplateTypeMetaVo taskTemplateTypeMetaVo) {
         boolean result = taskService.saveTaskTemplateTypeMeta(taskTemplateTypeMetaVo);
-        return result ? success(result) : RestModel.fail("000000", "create fail");
+        return result ? success(result) : RestModel.fail("0001", "create fail");
     }
 
     /**

@@ -260,7 +260,7 @@ public class TaskService {
     private List<TaskTemplateTypeMetaVo> getTaskTemplateTypeMetaVos() {
         List<TaskTemplateTypeMetaPo> taskTemplateTypeMetaPos = (List<TaskTemplateTypeMetaPo>)
                 taskTemplateTypeMetaCurd.findAll();
-        return taskTemplateTypeMetaPos.stream().map(e -> e.getMetaType()).collect(Collectors.toSet()).stream().map(ee -> {
+        return taskTemplateTypeMetaPos.stream().map(e -> e.getTaskTemplateType()).collect(Collectors.toSet()).stream().map(ee -> {
             return getTaskTemplateTypeMetaVoByTaskTemplateType(ee);
         }).collect(Collectors.toList());
     }
