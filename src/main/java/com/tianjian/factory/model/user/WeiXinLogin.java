@@ -1,6 +1,7 @@
 package com.tianjian.factory.model.user;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Created by tianjian on 2020/4/12.
@@ -8,10 +9,13 @@ import io.swagger.annotations.ApiModel;
 @ApiModel
 public class WeiXinLogin {
 
+    @ApiModelProperty("sessionKey")
     private String session_key;
 
+    @ApiModelProperty("微信openid")
     private String openid;
 
+    @ApiModelProperty("微信unionId")
     private String unionId;
 
     public String getSession_key() {

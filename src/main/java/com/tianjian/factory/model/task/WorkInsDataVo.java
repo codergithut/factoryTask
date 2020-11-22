@@ -4,7 +4,7 @@ package com.tianjian.factory.model.task;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-@ApiModel
+@ApiModel("工作数据状态")
 public class WorkInsDataVo {
 
     @ApiModelProperty("工作状态")

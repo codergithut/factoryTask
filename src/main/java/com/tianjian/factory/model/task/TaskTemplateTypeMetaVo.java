@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.util.List;
 
-@ApiModel
+@ApiModel("任务元数据")
 public class TaskTemplateTypeMetaVo {
 
     @ApiModelProperty("模板类型")

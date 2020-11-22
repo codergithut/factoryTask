@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel
 public class UserInfoVo {
 
+    @ApiModelProperty("用户编号")
     private String userId;
 
     /**
@@ -44,7 +45,7 @@ public class UserInfoVo {
     /**
      * 用户角色
      */
-    @ApiModelProperty("role")
+    @ApiModelProperty("角色")
     private String role;
 
 

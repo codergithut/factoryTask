@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-@ApiModel
+@ApiModel("任务模板")
 public class TaskTemplateVo {
 
     @ApiModelProperty("模板id")

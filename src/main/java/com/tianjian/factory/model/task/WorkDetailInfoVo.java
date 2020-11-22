@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.util.List;
 
-@ApiModel
+@ApiModel("工作详细数据")
 public class WorkDetailInfoVo {
 
     @ApiModelProperty("工作模板")

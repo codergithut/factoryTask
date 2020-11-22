@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Map;
 
-@ApiModel
+@ApiModel("任务视图数据")
 public class TaskInsDataVo {
 
     @ApiModelProperty("实际子任务id")
@@ -20,7 +20,7 @@ public class TaskInsDataVo {
     @ApiModelProperty("当前任务数据")
     private Map<String, Object> datas;
 
-    @ApiModelProperty("服务器返回码")
+    @ApiModelProperty("工序状态")
     private String taskStatus;
 
     @ApiModelProperty("处理人id")

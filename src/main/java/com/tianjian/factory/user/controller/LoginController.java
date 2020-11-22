@@ -5,6 +5,8 @@ import com.tianjian.factory.model.common.RestModel;
 import com.tianjian.factory.model.user.UserInfoVo;
 import com.tianjian.factory.model.user.WeiXinLogin;
 import com.tianjian.factory.user.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
@@ -19,6 +21,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
+@Api("用户管理")
 public class LoginController {
 
     String secretKey = "11563aa67bfedfa04777176081e240c2";
@@ -35,6 +38,7 @@ public class LoginController {
      * @return
      */
     @GetMapping("/getUserByOpenid")
+    @ApiOperation(value = "根据openid获取用户信息", notes = "根据openid获取用户信息", httpMethod = "GET")
     public RestModel getUserInfoByOpenid() {
         String openid = request.getHeader("openid");
         UserInfoVo userInfo = userService.getUserInfoByOpenId(openid);
@@ -50,6 +54,7 @@ public class LoginController {
     private RestTemplate restTemplate;
 
     @GetMapping("/getOpenid")
+    @ApiOperation(value = "获取openid", notes = "获取openid", httpMethod = "GET")
     public RestModel<Map<String,Object>> getUserInfo(@RequestParam("code") String code,
                                  @RequestParam("encryptedData") String encryptedData,
                                  @RequestParam("iv") String iv) {
@@ -72,6 +77,7 @@ public class LoginController {
     private HttpServletRequest request;
 
     @PostMapping("/saveUserInfo")
+    @ApiOperation(value = "保存用户信息", notes = "保存用户信息", httpMethod = "POST")
     public RestModel<Boolean> saveUserInfo(@RequestBody UserInfoVo userInfoVo) {
         if(userInfoVo.getDepartMentName() == null ||
                 userInfoVo.getUserName() == null ||
@@ -86,6 +92,7 @@ public class LoginController {
     }
 
     @GetMapping("/editUserInfo")
+    @ApiOperation(value = "编辑用户信息", notes = "编辑用户信息", httpMethod = "GET")
     public RestModel<Boolean> editUserInfo(@RequestParam("userName") String userName,
                                            @RequestParam("role") String role) {
         Boolean result = userService.editUserInfo(userName, role);
@@ -94,6 +101,7 @@ public class LoginController {
     }
 
     @GetMapping("/getUserByToken")
+    @ApiOperation(value = "根据openid获取用户信息", notes = "根据openid获取用户信息", httpMethod = "GET")
     public RestModel<UserInfoVo> getUserByToken() {
         String openid = request.getHeader("openid");
         UserInfoVo userInfo = userService.getUserInfoByOpenId(openid);
@@ -105,6 +113,7 @@ public class LoginController {
     }
 
     @GetMapping("/getUserByDepartmentName")
+    @ApiOperation(value = "根据部门获取用户信息", notes = "根据部门获取用户信息", httpMethod = "GET")
     public RestModel<List<UserInfoVo>> getUserByDepartMentId(@RequestParam("departMentName") String departMentName) {
         List<UserInfoVo> userInfoVos = userService.findByDepartMentName(departMentName);
         if(CollectionUtils.isEmpty(userInfoVos)) {
@@ -114,6 +123,7 @@ public class LoginController {
     }
 
     @GetMapping("/getAllUser")
+    @ApiOperation(value = "获取所有用户", notes = "获取所有用户", httpMethod = "GET")
     public RestModel<List<UserInfoVo>> getAllUser() {
         List<UserInfoVo> userInfoVos = userService.findAllUser();
         if(CollectionUtils.isEmpty(userInfoVos)) {
@@ -123,6 +133,7 @@ public class LoginController {
     }
 
     @GetMapping("/getUserByUserId")
+    @ApiOperation(value = "根据用户id获取用户", notes = "根据用户id获取用户", httpMethod = "GET")
     public RestModel<UserInfoVo> getUserInfoByUserId(@RequestParam("userId") String userId) {
         UserInfoVo userInfoVo = userService.findByUserId(userId);
         if(userInfoVo == null) {
