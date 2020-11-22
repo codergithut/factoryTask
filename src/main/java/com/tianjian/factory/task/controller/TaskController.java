@@ -82,14 +82,14 @@ public class TaskController {
     @ApiOperation(value = "创建任务模板", notes = "创建任务模板", httpMethod = "POST")
     public RestModel<Boolean> createTaskTemplate(@RequestBody TaskTemplateVo taskTemplateVo) {
         boolean result = taskService.saveTaskTemplate(taskTemplateVo);
-        return result ? success(result) : RestModel.fail("000000", "create fail");
+        return result ? success(result) : RestModel.fail("0001", "create fail");
     }
 
     @GetMapping("/getTaskTemplateById")
     @ApiOperation(value = "根据id获取任务模板", notes = "根据id获取任务模板", httpMethod = "GET")
     public RestModel getTaskTemplate(@RequestParam("taskTemplateId") String taskTemplateId) {
         TaskTemplateVo result = taskService.findByTaskTemplateId(taskTemplateId);
-        return result != null ? success(result) : RestModel.fail("000000", "create fail");
+        return result != null ? success(result) : RestModel.fail("0001", "create fail");
     }
 
     @PostMapping("/createWorkTemplate")
@@ -97,7 +97,7 @@ public class TaskController {
     public RestModel<Boolean> createWorkTemplate(@RequestBody WorkTemplateVo workTemplateVo) {
         log.info("----" + JSON.toJSONString(workTemplateVo));
         boolean result = taskService.saveWorkTemplateVo(workTemplateVo);
-        return result ? success(result) : RestModel.fail("000000", "create work template fail");
+        return result ? success(result) : RestModel.fail("0001", "create work template fail");
     }
 
     @GetMapping("/getAllTaskTemplates")
@@ -107,7 +107,7 @@ public class TaskController {
         if(!CollectionUtils.isEmpty(taskTemplateVos)){
             return RestModel.success(taskTemplateVos);
         } else {
-            return RestModel.fail("000000", "getTaskTemplate fail");
+            return RestModel.fail("0001", "getTaskTemplate fail");
         }
     }
 
@@ -118,7 +118,7 @@ public class TaskController {
 
         List<WorkTemplateVo> workTemplateVos = taskService.getMyWork(userId);
         if(CollectionUtils.isEmpty(workTemplateVos)) {
-            return RestModel.fail("000000", "get work fail");
+            return RestModel.fail("0001", "get work fail");
         } else {
             return success(workTemplateVos);
         }
@@ -129,7 +129,7 @@ public class TaskController {
     public RestModel getAllWork() {
         List<WorkTemplateVo> workInsDataVos = taskService.getAllWork();
         if(CollectionUtils.isEmpty(workInsDataVos)) {
-            return RestModel.fail("000000", "get work fail");
+            return RestModel.fail("0001", "get work fail");
         } else {
             return success(workInsDataVos);
         }
@@ -139,7 +139,7 @@ public class TaskController {
     @ApiOperation(value = "开始工作", notes = "开始工作", httpMethod = "GET")
     public RestModel<Boolean> startWork(@RequestParam("workTemplateId") String workTemplateId) {
         boolean result = taskService.workProcess(workTemplateId, 0);
-        return result ? success(result) : RestModel.fail("000000", "start work fail");
+        return result ? success(result) : RestModel.fail("0001", "start work fail");
     }
 
     @GetMapping("/submitWork")
@@ -147,21 +147,21 @@ public class TaskController {
     public RestModel<Boolean> submitWork(@RequestParam("workTemplateId") String workDetailCode) {
         boolean result = taskService.workSubmit(workDetailCode);
         log.info("submitWork param is {}", workDetailCode);
-        return result ? success(result) : RestModel.fail("000000", "start work fail");
+        return result ? success(result) : RestModel.fail("0001", "start work fail");
     }
 
     @GetMapping("/bossSubmitWork")
     @ApiOperation(value = "boss提交工作", notes = "boss提交工作", httpMethod = "GET")
     public RestModel<Boolean> bossSubmitWork(@RequestParam("workDetailCode") String workDetailCode) {
         boolean result = taskService.bossSubmitWork(workDetailCode);
-        return result ? success(result) : RestModel.fail("000000", "start work fail");
+        return result ? success(result) : RestModel.fail("0001", "start work fail");
     }
 
     @GetMapping("/rejectWork")
     @ApiOperation(value = "驳回任务", notes = "驳回任务", httpMethod = "GET")
     public RestModel<Boolean> rejectWork(@RequestParam("workDetailCode") String workDetailCode) {
         boolean result = taskService.bosssRejectWork(workDetailCode);
-        return result ? success(result) : RestModel.fail("000000", "start work fail");
+        return result ? success(result) : RestModel.fail("0001", "start work fail");
     }
 
     @GetMapping("/getTaskInsInfo")

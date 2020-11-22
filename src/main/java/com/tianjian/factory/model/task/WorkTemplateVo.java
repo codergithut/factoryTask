@@ -24,19 +24,15 @@ public class WorkTemplateVo {
     private List<WorkTemplateDetailVo> subTasks;
 
     @ApiModelProperty("启动时间")
-    @JsonFormat(pattern="yyyy-MM-dd")
     private Date startDate;
 
     @ApiModelProperty("结束时间")
-    @JsonFormat(pattern="yyyy-MM-dd")
     private Date endDate;
 
     @ApiModelProperty("创建时间")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     @ApiModelProperty("更新时间")
-    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
     @ApiModelProperty("工作节点")
