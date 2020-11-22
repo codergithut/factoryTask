@@ -10,7 +10,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -104,11 +103,7 @@ public class TaskController {
     @ApiOperation(value = "获取任务模板列表", notes = "获取任务模板列表", httpMethod = "GET")
     public RestModel<List<TaskTemplateVo>> getAllTaskTemplates() {
         List<TaskTemplateVo> taskTemplateVos = taskService.getAllTaskTemplates();
-        if(!CollectionUtils.isEmpty(taskTemplateVos)){
-            return RestModel.success(taskTemplateVos);
-        } else {
-            return RestModel.fail("0001", "getTaskTemplate fail");
-        }
+        return RestModel.success(taskTemplateVos);
     }
 
     @GetMapping("/getMyWorks")
