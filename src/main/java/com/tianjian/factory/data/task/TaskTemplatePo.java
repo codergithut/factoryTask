@@ -20,10 +20,11 @@ public class TaskTemplatePo {
     private String taskTemplateName;
 
 
+
     /**
-     * 模板类型 taskTemplateType 用，分割省的我在处理
+     * task 元数据
      */
-    private String taskTemplateTypes;
+    private String taskTemplateTypeMeta;
 
     /**
      * 更新时间
@@ -52,12 +53,12 @@ public class TaskTemplatePo {
         this.taskTemplateName = taskTemplateName;
     }
 
-    public String getTaskTemplateTypes() {
-        return taskTemplateTypes;
+    public String getTaskTemplateTypeMeta() {
+        return taskTemplateTypeMeta;
     }
 
-    public void setTaskTemplateTypes(String taskTemplateTypes) {
-        this.taskTemplateTypes = taskTemplateTypes;
+    public void setTaskTemplateTypeMeta(String taskTemplateTypeMeta) {
+        this.taskTemplateTypeMeta = taskTemplateTypeMeta;
     }
 
     public Date getUpdateTime() {

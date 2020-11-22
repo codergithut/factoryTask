@@ -25,7 +25,7 @@ public class TaskService {
 
     /**
      * 保存任务元数据
-     * @param taskTemplateTypeMetaVos
+     * @param
      * @return
      */
     public boolean saveTaskTemplateTypeMeta(TaskTemplateTypeMetaVo taskTemplateTypeMetaVo) {
@@ -87,7 +87,7 @@ public class TaskService {
         taskTemplatePo.setId(UUID.randomUUID().toString());
         taskTemplatePo.setCreateTime(new Date());
         taskTemplatePo.setUpdateTime(new Date());
-        taskTemplatePo.setTaskTemplateTypes(JSON.toJSONString(taskTemplateVo.getTaskTemplateTypes()));
+        taskTemplatePo.setTaskTemplateTypeMeta(taskTemplateVo.getTaskTemplateTypeMeta());
         return taskTemplateCurd.save(taskTemplatePo) != null;
     }
 
@@ -100,16 +100,15 @@ public class TaskService {
         Optional<TaskTemplatePo> taskTemplatePoOpt = taskTemplateCurd.findById(taskTemplateId);
         if(taskTemplatePoOpt.isPresent()) {
             TaskTemplateVo taskTemplateVo = new TaskTemplateVo();
-            List<TaskTemplateTypeMetaVo> taskTemplateTypeMetaVos = new ArrayList<>();
             TaskTemplatePo taskTemplatePo = taskTemplatePoOpt.get();
             BeanUtils.copyProperties(taskTemplatePo, taskTemplateVo);
-            Set<String> templateTypes = JSON.parseObject(taskTemplatePo.getTaskTemplateTypes(),Set.class);
-            for(String taskTemplateType : templateTypes) {
-                taskTemplateTypeMetaVos.add(getTaskTemplateTypeMetaVoByTaskTemplateType(taskTemplateType));
-            }
+            String meta = taskTemplatePo.getTaskTemplateTypeMeta();
+            getTaskTemplateTypeMetaVoByTaskTemplateType(meta);
             taskTemplateVo.setTaskName(taskTemplatePo.getTaskTemplateName());
-            taskTemplateVo.setTaskTemplateTypes(templateTypes);
-            taskTemplateVo.setTaskTemplateTypeMetaVos(taskTemplateTypeMetaVos);
+            TaskTemplateTypeMetaVo taskTemplateTypeMetaVo = getTaskTemplateTypeMetaVoByTaskTemplateType(meta);
+            if(taskTemplateTypeMetaVo != null) {
+                taskTemplateVo.setTaskTemplateTypeMetaVo(getTaskTemplateTypeMetaVoByTaskTemplateType(meta));
+            }
             return taskTemplateVo;
         }
         return null;

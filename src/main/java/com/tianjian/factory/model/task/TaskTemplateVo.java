@@ -17,20 +17,12 @@ public class TaskTemplateVo {
     @ApiModelProperty("模板名称")
     private String taskName;
 
-    @ApiModelProperty("模板类型具体数据")
-    private List<TaskTemplateTypeMetaVo> taskTemplateTypeMetaVos;
-
-    @ApiModelProperty("模板类型数据")
-    private Set<String> taskTemplateTypes;
-
     @ApiModelProperty("元数据具体数据")
-    public List<TaskTemplateTypeMetaVo> getTaskTemplateTypeMetaVos() {
-        return taskTemplateTypeMetaVos;
-    }
+    private TaskTemplateTypeMetaVo taskTemplateTypeMetaVo;
 
-    public void setTaskTemplateTypeMetaVos(List<TaskTemplateTypeMetaVo> taskTemplateTypeMetaVos) {
-        this.taskTemplateTypeMetaVos = taskTemplateTypeMetaVos;
-    }
+    @ApiModelProperty("元数据id")
+    private String taskTemplateTypeMeta;
+
 
     public String getTaskCode() {
         return taskCode;
@@ -48,12 +40,19 @@ public class TaskTemplateVo {
         this.taskName = taskName;
     }
 
-    public Set<String> getTaskTemplateTypes() {
-        return taskTemplateTypes;
+    public String getTaskTemplateTypeMeta() {
+        return taskTemplateTypeMeta;
     }
 
-    public void setTaskTemplateTypes(Set<String> taskTemplateTypes) {
-        this.taskTemplateTypes = taskTemplateTypes;
+    public void setTaskTemplateTypeMeta(String taskTemplateTypeMeta) {
+        this.taskTemplateTypeMeta = taskTemplateTypeMeta;
     }
 
+    public TaskTemplateTypeMetaVo getTaskTemplateTypeMetaVo() {
+        return taskTemplateTypeMetaVo;
+    }
+
+    public void setTaskTemplateTypeMetaVo(TaskTemplateTypeMetaVo taskTemplateTypeMetaVo) {
+        this.taskTemplateTypeMetaVo = taskTemplateTypeMetaVo;
+    }
 }
