@@ -110,24 +110,15 @@ public class TaskController {
     @ApiOperation(value = "获取我的工作", notes = "获取我的工作", httpMethod = "GET")
     public RestModel<List<WorkTemplateVo>> getMyWork() {
         String userId = RequestUtil.getUserCodeBySession(request);
-
         List<WorkTemplateVo> workTemplateVos = taskService.getMyWork(userId);
-        if(CollectionUtils.isEmpty(workTemplateVos)) {
-            return RestModel.fail("0001", "get work fail");
-        } else {
-            return success(workTemplateVos);
-        }
+        return success(workTemplateVos);
     }
 
     @GetMapping("/getWorks")
     @ApiOperation(value = "获取所有工作", notes = "获取所有工作", httpMethod = "GET")
     public RestModel getAllWork() {
         List<WorkTemplateVo> workInsDataVos = taskService.getAllWork();
-        if(CollectionUtils.isEmpty(workInsDataVos)) {
-            return RestModel.fail("0001", "get work fail");
-        } else {
-            return success(workInsDataVos);
-        }
+        return success(workInsDataVos);
     }
 
     @GetMapping("/startWork")
