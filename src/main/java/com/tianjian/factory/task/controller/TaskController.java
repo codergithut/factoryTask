@@ -173,6 +173,15 @@ public class TaskController {
         return RestModel.success(taskDetailDataVo);
     }
 
+    @GetMapping("/getMetaById")
+    @ApiOperation(value = "获取子任务元数据", notes = "获取子任务元数据", httpMethod = "GET")
+    public RestModel<TaskTemplateVo> getMetaById(@RequestParam("taskDetailCode") String taskDetailCode) {
+        TaskTemplateVo taskTemplateVo = taskService.getMetaById(taskDetailCode);
+        return RestModel.success(taskTemplateVo);
+    }
+
+
+
     @PostMapping("/editTaskData")
     @ApiOperation(value = "编辑节点用户数据", notes = "编辑节点用户数据", httpMethod = "POST")
     public RestModel editTaskData(@RequestBody TaskInsInputDataVo taskInsInputDataVo) {

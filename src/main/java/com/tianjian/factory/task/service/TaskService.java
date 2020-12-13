@@ -433,4 +433,8 @@ public class TaskService {
         return true;
     }
 
+    public TaskTemplateVo getMetaById(String taskDetailCode) {
+        WorkTemplateDetailPo workTemplateDetailPo = workTemplateDetailCurd.findById(taskDetailCode).get();
+        return findByTaskTemplateId(workTemplateDetailPo.getTaskTemplateId());
+    }
 }
