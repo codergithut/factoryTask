@@ -14,7 +14,7 @@ public class TaskInsDataVo {
     @ApiModelProperty("任务名称")
     private String taskName;
 
-    @ApiModelProperty("服务器返回码")
+    @ApiModelProperty("任务模板等数据")
     private TaskTemplateVo taskTemplate;
 
     @ApiModelProperty("当前任务数据")

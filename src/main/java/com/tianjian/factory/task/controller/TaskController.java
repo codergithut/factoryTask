@@ -14,7 +14,9 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import static com.tianjian.factory.model.common.RestModel.success;
@@ -82,13 +84,6 @@ public class TaskController {
     public RestModel<Boolean> createTaskTemplate(@RequestBody TaskTemplateVo taskTemplateVo) {
         boolean result = taskService.saveTaskTemplate(taskTemplateVo);
         return result ? success(result) : RestModel.fail("0001", "create fail");
-    }
-
-    @GetMapping("/getTaskTemplateById")
-    @ApiOperation(value = "根据id获取任务模板", notes = "根据id获取任务模板", httpMethod = "GET")
-    public RestModel getTaskTemplate(@RequestParam("taskTemplateId") String taskTemplateId) {
-        TaskTemplateVo result = taskService.findByTaskTemplateId(taskTemplateId);
-        return result != null ? success(result) : RestModel.fail("0001", "create fail");
     }
 
     @PostMapping("/createWorkTemplate")
@@ -177,4 +172,19 @@ public class TaskController {
         TaskDetailDataVo taskDetailDataVo = taskService.findTaskDetailByCode(taskDetailCode);
         return RestModel.success(taskDetailDataVo);
     }
+
+    @PostMapping("/editTaskData")
+    @ApiOperation(value = "编辑节点用户数据", notes = "编辑节点用户数据", httpMethod = "POST")
+    public RestModel editTaskData(@RequestBody TaskInsInputDataVo taskInsInputDataVo) {
+        boolean result = taskService.editTaskInsData(taskInsInputDataVo);
+        return result ? success(result) : RestModel.fail("0001", "can not find data");
+    }
+
+    @GetMapping("/getTaskTemplateById")
+    @ApiOperation(value = "根据taskTemplateId获取任务模板", notes = "根据id获取任务模板", httpMethod = "GET")
+    public RestModel getTaskTemplate(@RequestParam("taskTemplateId") String taskTemplateId) {
+        TaskTemplateVo result = taskService.findByTaskTemplateId(taskTemplateId);
+        return result != null ? success(result) : RestModel.fail("0001", "create fail");
+    }
+
 }

@@ -9,6 +9,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -375,7 +376,19 @@ public class TaskService {
         Integer orderNum = workTemplateDetailPo.getOrderNum();
         WorkInsDataPo workInsDataPo = workInsDataCurd.findByWorkTemplateIdAndWorkStatus
                 (workTemplateDetailPo.getWorkTemplateId(), "active");
+        TaskInsDataPo taskInsDataPo = taskInsDataCurd.findByWorkTemplateIdAndTaskTemplateId
+                (workTemplateDetailPo.getWorkTemplateId(), workTemplateDetailPo.getTaskTemplateId());
         TaskDetailDataVo taskDetailDataVo = new TaskDetailDataVo();
+
+        if(taskInsDataPo != null) {
+            taskDetailDataVo.setTaskInsDataCode(taskInsDataPo.getId());
+        }
+
+        taskDetailDataVo.setTaskTemplateVo(findByTaskTemplateId(workTemplateDetailPo.getTaskTemplateId()));
+        if(taskInsDataPo != null && !StringUtils.isEmpty(taskInsDataPo.getData())) {
+            taskDetailDataVo.setData(JSON.parseObject(taskInsDataPo.getData(), Map.class));
+        }
+
         if(workInsDataPo == null || workInsDataPo.getOrderNum() > orderNum) {
             taskDetailDataVo.setTaskStatus("finish");
         }else if(workInsDataPo.getOrderNum() == orderNum) {
@@ -408,4 +421,16 @@ public class TaskService {
         return false;
 
     }
+
+    public boolean editTaskInsData(TaskInsInputDataVo taskInsInputDataVo) {
+        Optional<TaskInsDataPo> taskInsDataPoOpt = taskInsDataCurd.findById(taskInsInputDataVo.getTaskInsDataCode());
+        if(!taskInsDataPoOpt.isPresent()) {
+            return false;
+        }
+        TaskInsDataPo taskInsDataPo = taskInsDataPoOpt.get();
+        taskInsDataPo.setData(JSON.toJSONString(taskInsInputDataVo.getData()));
+        taskInsDataCurd.save(taskInsDataPo);
+        return true;
+    }
+
 }

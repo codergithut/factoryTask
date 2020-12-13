@@ -54,6 +54,11 @@ public class TaskInsDataPo {
      */
     private Date updateTime;
 
+    /**
+     * 用户输入数据
+     */
+    private String data;
+
 
     public String getId() {
         return id;
@@ -125,5 +130,13 @@ public class TaskInsDataPo {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
     }
 }

@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.util.Date;
+import java.util.Map;
 
 /**
  * Created by tianjian on 2020/6/27.
@@ -34,6 +35,14 @@ public class TaskDetailDataVo {
 
     @ApiModelProperty("顺序")
     private Integer orderNum;
+
+    @ApiModelProperty("用户数据")
+    private Map<String, String> data;
+
+    @ApiModelProperty("用户元数据")
+    private TaskTemplateVo taskTemplateVo;
+
+    private String taskInsDataCode;
 
     public String getTaskDetailCode() {
         return taskDetailCode;
@@ -97,5 +106,29 @@ public class TaskDetailDataVo {
 
     public void setOrderNum(Integer orderNum) {
         this.orderNum = orderNum;
+    }
+
+    public Map<String, String> getData() {
+        return data;
+    }
+
+    public void setData(Map<String, String> data) {
+        this.data = data;
+    }
+
+    public String getTaskInsDataCode() {
+        return taskInsDataCode;
+    }
+
+    public void setTaskInsDataCode(String taskInsDataCode) {
+        this.taskInsDataCode = taskInsDataCode;
+    }
+
+    public TaskTemplateVo getTaskTemplateVo() {
+        return taskTemplateVo;
+    }
+
+    public void setTaskTemplateVo(TaskTemplateVo taskTemplateVo) {
+        this.taskTemplateVo = taskTemplateVo;
     }
 }
