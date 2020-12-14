@@ -48,6 +48,12 @@ public class UserInfoVo {
     @ApiModelProperty("角色")
     private String role;
 
+    /**
+     * 用户token
+     */
+    @ApiModelProperty("用户token")
+    private String token;
+
 
     /**
      * 部门
@@ -117,6 +123,15 @@ public class UserInfoVo {
 
     public void setOpenid(String openid) {
         this.openid = openid;
+    }
+
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public static UserInfoVo mockUsrInfoVo() {

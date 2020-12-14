@@ -4,6 +4,9 @@ package com.tianjian.factory.model.common;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import static com.tianjian.factory.config.CommonConstant.FAIL_CODE;
+import static com.tianjian.factory.config.CommonConstant.SUCCESS_CODE;
+
 @ApiModel
 public class RestModel<T> {
 
@@ -57,7 +60,7 @@ public class RestModel<T> {
     public static <T> RestModel<T> success(T data) {
         RestModel<T> restModel = new RestModel<T>();
         restModel.setData(data);
-        restModel.setCode("0000");
+        restModel.setCode(SUCCESS_CODE);
         restModel.setMsg("success");
         return restModel;
     }
@@ -68,6 +71,11 @@ public class RestModel<T> {
 
     public static RestModel fail(String code, String message) {
         RestModel restModel = new RestModel(code, message);
+        return restModel;
+    }
+
+    public static RestModel fail(String message) {
+        RestModel restModel = new RestModel(FAIL_CODE, message);
         return restModel;
     }
 }

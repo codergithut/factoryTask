@@ -8,4 +8,6 @@ public interface UserInfoDataCurd extends CrudRepository<UserInfoPo,String> {
     List<UserInfoPo> findByDepartMentName(String departMentName);
 
     UserInfoPo findByUserName(String userName);
+
+    UserInfoPo findByUserNameAndPassWord(String userName, String passWord);
 }

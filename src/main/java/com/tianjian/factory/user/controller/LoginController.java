@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -44,7 +45,7 @@ public class LoginController {
         UserInfoVo userInfo = userService.getUserInfoByOpenId(openid);
         userInfo.setOpenid(openid);
         if(userInfo == null) {
-            return RestModel.fail("000001", "not find user");
+            return RestModel.fail("not find user");
         } else {
             return RestModel.success(userInfo);
         }
@@ -82,13 +83,13 @@ public class LoginController {
         if(userInfoVo.getDepartMentName() == null ||
                 userInfoVo.getUserName() == null ||
                 userInfoVo.getTelPhoneNum() == null){
-            return RestModel.fail("000000", "use info error");
+            return RestModel.fail( "use info error");
         }
         String openid = request.getHeader("openid");
         userInfoVo.setOpenid(openid);
-        userInfoVo.setRole("null");
+        userInfoVo.setRole("root");
         Boolean result =  userService.saveUserInfo(userInfoVo);
-        return  result ? RestModel.success(result) : RestModel.fail("000000", "user add fail");
+        return  result ? RestModel.success(result) : RestModel.fail("user add fail");
     }
 
     @GetMapping("/editUserInfo")
@@ -96,7 +97,7 @@ public class LoginController {
     public RestModel<Boolean> editUserInfo(@RequestParam("userName") String userName,
                                            @RequestParam("role") String role) {
         Boolean result = userService.editUserInfo(userName, role);
-        return result ? RestModel.success(result) : RestModel.fail("000000", "user add fail");
+        return result ? RestModel.success(result) : RestModel.fail( "user add fail");
 
     }
 
@@ -117,7 +118,7 @@ public class LoginController {
     public RestModel<List<UserInfoVo>> getUserByDepartMentId(@RequestParam("departMentName") String departMentName) {
         List<UserInfoVo> userInfoVos = userService.findByDepartMentName(departMentName);
         if(CollectionUtils.isEmpty(userInfoVos)) {
-            return RestModel.fail("000000", "get data fail");
+            return RestModel.fail( "get data fail");
         }
         return RestModel.success(userInfoVos);
     }
@@ -127,7 +128,7 @@ public class LoginController {
     public RestModel<List<UserInfoVo>> getAllUser() {
         List<UserInfoVo> userInfoVos = userService.findAllUser();
         if(CollectionUtils.isEmpty(userInfoVos)) {
-            return RestModel.fail("000000", "get data fail");
+            return RestModel.fail("get data fail");
         }
         return RestModel.success(userInfoVos);
     }
@@ -137,9 +138,22 @@ public class LoginController {
     public RestModel<UserInfoVo> getUserInfoByUserId(@RequestParam("userId") String userId) {
         UserInfoVo userInfoVo = userService.findByUserId(userId);
         if(userInfoVo == null) {
-            return RestModel.fail("000000", "can not find user info");
+            return RestModel.fail("can not find user info");
         }
         return RestModel.success(userInfoVo);
+    }
+
+    @PostMapping("/userLogin")
+    public RestModel<UserInfoVo> userLogin(@RequestBody UserInfoVo userInfoVo) {
+        if(StringUtils.isEmpty(userInfoVo.getUserName()) || StringUtils.isEmpty(userInfoVo.getPassWord())) {
+            return RestModel.fail("用户数据验证失败");
+        }
+        UserInfoVo logUserInfoVo = userService.
+                findByUserNameAndPassWord(userInfoVo.getUserName(), userInfoVo.getPassWord());
+        if(logUserInfoVo == null) {
+            return RestModel.fail("用户数据验证失败");
+        }
+        return RestModel.success(logUserInfoVo);
     }
 
 }

@@ -1,10 +1,12 @@
 package com.tianjian.factory.user.service;
 
+import com.tianjian.factory.cache.LoginCacheService;
 import com.tianjian.factory.data.user.UserInfoDataCurd;
 import com.tianjian.factory.data.user.UserInfoPo;
 import com.tianjian.factory.data.user.WeiXinUserInfoCurd;
 import com.tianjian.factory.data.user.WeiXinUserInfoPo;
 import com.tianjian.factory.model.user.UserInfoVo;
+import org.apache.catalina.User;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,9 @@ public class UserService {
 
     @Autowired
     private UserInfoDataCurd userInfoDataCurd;
+
+    @Autowired
+    private LoginCacheService LoginCacheService;
 
     /**
      * 获取用户信息
@@ -115,5 +120,19 @@ public class UserService {
             return true;
         }
         return false;
+    }
+
+    public UserInfoVo findByUserNameAndPassWord(String userName, String passWord) {
+        UserInfoPo userInfoPo = userInfoDataCurd.findByUserNameAndPassWord(userName, passWord);
+        UserInfoVo userInfoVo = new UserInfoVo();
+        String token = UUID.randomUUID().toString();
+        if(userInfoPo != null) {
+            LoginCacheService.addUserToken(token, userInfoPo.getId());
+            BeanUtils.copyProperties(userInfoPo, userInfoVo);
+            userInfoVo.setToken(token);
+            userInfoVo.setUserId(null);
+            return userInfoVo;
+        }
+        return null;
     }
 }
