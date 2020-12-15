@@ -1,6 +1,8 @@
 package com.tianjian.factory.user.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.tianjian.factory.cache.CacheService;
+import com.tianjian.factory.cache.LoginCacheService;
 import com.tianjian.factory.model.common.RestModel;
 import com.tianjian.factory.model.user.UserInfoVo;
 import com.tianjian.factory.model.user.WeiXinLogin;
@@ -33,6 +35,9 @@ public class LoginController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private LoginCacheService cacheService;
 
 
     /**
@@ -105,12 +110,12 @@ public class LoginController {
     @GetMapping("/getUserByToken")
     @ApiOperation(value = "根据openid获取用户信息", notes = "根据openid获取用户信息", httpMethod = "GET")
     public RestModel<UserInfoVo> getUserByToken() {
-        String openid = request.getHeader("openid");
-        UserInfoVo userInfo = userService.getUserInfoByOpenId(openid);
+        String id = cacheService.getUserIdByRequest(request);
+        UserInfoVo userInfo = userService.getUserInfoById(id);
         if(userInfo != null) {
-            userInfo.setOpenid(openid);
+            return RestModel.success(userInfo);
         }
-        return RestModel.success(userInfo);
+        return RestModel.fail("未能获取用户数据");
 
     }
 

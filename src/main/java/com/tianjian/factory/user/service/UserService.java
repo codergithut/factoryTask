@@ -149,4 +149,14 @@ public class UserService {
         }
         return null;
     }
+
+    public UserInfoVo getUserInfoById(String id) {
+        Optional<UserInfoPo> userInfoPoOptional = userInfoDataCurd.findById(id);
+        if(userInfoPoOptional.isPresent()) {
+            UserInfoVo userInfoVo = new UserInfoVo();
+            BeanUtils.copyProperties(userInfoPoOptional.get(), userInfoVo);
+            return userInfoVo;
+        }
+        return null;
+    }
 }
