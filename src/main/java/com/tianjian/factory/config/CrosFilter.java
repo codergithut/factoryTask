@@ -12,7 +12,7 @@ import java.io.IOException;
 /**
  * Created by tianjian on 2020/12/15.
  */
-@WebFilter(urlPatterns = "/*", filterName = "crosFilter")
+//@WebFilter(urlPatterns = "/*", filterName = "crosFilter")
 public class CrosFilter implements Filter {
 
     @Override

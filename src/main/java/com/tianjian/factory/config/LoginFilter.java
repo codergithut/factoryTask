@@ -11,8 +11,8 @@ import java.io.IOException;
 
 /**
  * Created by tianjian on 2020/12/15.
- */
-@WebFilter(urlPatterns = "/task/*", filterName = "loginFilter")
+// */
+//@WebFilter(urlPatterns = "/task/*", filterName = "loginFilter")
 public class LoginFilter implements Filter {
 
     @Autowired
