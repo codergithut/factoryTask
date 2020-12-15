@@ -27,7 +27,7 @@ public class CrosFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
         //解决跨域的问题
-        response.setHeader("Access-Control-Allow-Origin","localhost:8080");
+        response.setHeader("Access-Control-Allow-Origin","http://localhost:8080");
         response.setHeader("Access-Control-Allow-Credentials","true");
         response.setHeader("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With,X-App-Id, X-Token");
         response.setHeader("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
