@@ -37,7 +37,7 @@ public class WebAppConfig extends WebMvcConfigurationSupport {
                return true;
            }
            response.setStatus(401);
-           return false;
+           return true;
         }
     }
 }
