@@ -146,11 +146,11 @@ public class LoginController {
     @PostMapping("/userLogin")
     @ApiOperation(value = "用户登录", notes = "用户登录", httpMethod = "POST")
     public RestModel<UserInfoVo> userLogin(@RequestBody UserInfoVo userInfoVo) {
-        if(StringUtils.isEmpty(userInfoVo.getUserName()) || StringUtils.isEmpty(userInfoVo.getPassWord())) {
+        if(StringUtils.isEmpty(userInfoVo.getTelPhoneNum()) || StringUtils.isEmpty(userInfoVo.getPassWord())) {
             return RestModel.fail("用户数据验证失败");
         }
         UserInfoVo logUserInfoVo = userService.
-                findByUserNameAndPassWord(userInfoVo.getUserName(), userInfoVo.getPassWord());
+                findByTelPhoneNumAndPassWord(userInfoVo.getTelPhoneNum(), userInfoVo.getPassWord());
         if(logUserInfoVo == null) {
             return RestModel.fail("用户数据验证失败");
         }

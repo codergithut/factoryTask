@@ -10,4 +10,6 @@ public interface UserInfoDataCurd extends CrudRepository<UserInfoPo,String> {
     UserInfoPo findByUserName(String userName);
 
     UserInfoPo findByUserNameAndPassWord(String userName, String passWord);
+
+    UserInfoPo findByTelPhoneNumAndPassWord(String telPhoneNum, String passWord);
 }

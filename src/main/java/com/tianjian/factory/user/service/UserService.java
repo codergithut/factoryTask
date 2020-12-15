@@ -135,4 +135,18 @@ public class UserService {
         }
         return null;
     }
+
+    public UserInfoVo findByTelPhoneNumAndPassWord(String telPhoneNum, String passWord) {
+        UserInfoPo userInfoPo = userInfoDataCurd.findByTelPhoneNumAndPassWord(telPhoneNum, passWord);
+        UserInfoVo userInfoVo = new UserInfoVo();
+        String token = UUID.randomUUID().toString();
+        if(userInfoPo != null) {
+            LoginCacheService.addUserToken(token, userInfoPo.getId());
+            BeanUtils.copyProperties(userInfoPo, userInfoVo);
+            userInfoVo.setToken(token);
+            userInfoVo.setUserId(null);
+            return userInfoVo;
+        }
+        return null;
+    }
 }
