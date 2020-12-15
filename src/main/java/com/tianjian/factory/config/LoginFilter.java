@@ -28,7 +28,10 @@ public class LoginFilter implements Filter {
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-
+        if(loginCacheService.getUserIdByRequest(request) == null) {
+            response.setStatus(401);
+            return ;
+        }
 
         //解决跨域的问题
         response.setHeader("Access-Control-Allow-Origin","https://weixin.frontjs.top:443");
@@ -36,11 +39,6 @@ public class LoginFilter implements Filter {
         response.setHeader("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With,X-App-Id, X-Token");
         response.setHeader("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
         response.setHeader("Access-Control-Max-Age", "3600");
-
-        if(loginCacheService.getUserIdByRequest((HttpServletRequest) request) == null) {
-            response.setStatus(401);
-            return ;
-        }
         filterChain.doFilter(request, servletResponse);
     }
 
