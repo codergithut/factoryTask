@@ -11,8 +11,8 @@ import java.io.IOException;
 
 /**
  * Created by tianjian on 2020/12/15.
-// */
-//@WebFilter(urlPatterns = "/task/*", filterName = "loginFilter")
+ */
+@WebFilter(urlPatterns = "/task/*", filterName = "loginFilter")
 public class LoginFilter implements Filter {
 
     @Autowired
@@ -28,6 +28,14 @@ public class LoginFilter implements Filter {
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
+
+
+        //解决跨域的问题
+        response.setHeader("Access-Control-Allow-Origin","https://weixin.frontjs.top:443");
+        response.setHeader("Access-Control-Allow-Credentials","true");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With,X-App-Id, X-Token");
+        response.setHeader("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+        response.setHeader("Access-Control-Max-Age", "3600");
 
         if(loginCacheService.getUserIdByRequest((HttpServletRequest) request) == null) {
             response.setStatus(401);
