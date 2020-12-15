@@ -28,7 +28,7 @@ public class LoginFilter implements Filter {
         if(loginCacheService.getUserIdByRequest((HttpServletRequest) request) == null) {
             HttpServletResponse response = (HttpServletResponse)servletResponse;
             response.setStatus(401);
-            //return ;
+            return ;
         }
         filterChain.doFilter(request, servletResponse);
     }
