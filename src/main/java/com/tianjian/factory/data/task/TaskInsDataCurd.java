@@ -13,5 +13,5 @@ public interface TaskInsDataCurd extends CrudRepository<TaskInsDataPo, String> {
 
     TaskInsDataPo findByWorkTemplateIdAndOrderNum(String workTemplateId, int orderNum);
 
-    TaskInsDataPo findByWorkTemplateIdAndOrderNumAndStatus(String workTemplateId, int orderNum, String active);
+    TaskInsDataPo findByWorkTemplateIdAndOrderNumAndTaskStatus(String workTemplateId, int orderNum, String active);
 }

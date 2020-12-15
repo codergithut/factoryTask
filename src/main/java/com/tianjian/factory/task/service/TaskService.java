@@ -359,7 +359,7 @@ public class TaskService {
                 taskDetailDataVo.setTaskStatus("wait");
             }
             TaskInsDataPo taskInsDataPo = taskInsDataCurd.
-                    findByWorkTemplateIdAndOrderNumAndStatus(workInsDataPo.getWorkTemplateId(),
+                    findByWorkTemplateIdAndOrderNumAndTaskStatus(workInsDataPo.getWorkTemplateId(),
                             workInsDataPo.getOrderNum(), "active");
             if(taskInsDataPo != null) {
                 taskDetailDataVo.setTaskInsDataCode(taskInsDataPo.getId());
