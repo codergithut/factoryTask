@@ -55,6 +55,11 @@ public class TaskInsDataPo {
     private Date updateTime;
 
     /**
+     * 任务次序
+     */
+    private Integer orderNum;
+
+    /**
      * 用户输入数据
      */
     private String data;
@@ -138,5 +143,13 @@ public class TaskInsDataPo {
 
     public void setData(String data) {
         this.data = data;
+    }
+
+    public Integer getOrderNum() {
+        return orderNum;
+    }
+
+    public void setOrderNum(Integer orderNum) {
+        this.orderNum = orderNum;
     }
 }

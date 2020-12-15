@@ -180,6 +180,7 @@ public class TaskService {
         taskInsDataPo.setResourceId(UUID.randomUUID().toString());
         taskInsDataPo.setTaskTemplateName(workTemplateDetailPo.getTaskTemplateName());
         taskInsDataPo.setWorkTemplateId(workTemplateId);
+        taskInsDataPo.setOrderNum(orderNum);
         taskInsDataPo.setCreateTime(new Date());
         taskInsDataPo.setUpdateTime(new Date());
 
@@ -356,6 +357,11 @@ public class TaskService {
                 taskDetailDataVo.setTaskStatus("active");
             } else {
                 taskDetailDataVo.setTaskStatus("wait");
+            }
+            TaskInsDataPo taskInsDataPo = taskInsDataCurd.
+                    findByWorkTemplateIdAndOrderNum(workInsDataPo.getWorkTemplateId(), workInsDataPo.getOrderNum());
+            if(taskInsDataPo != null) {
+                taskDetailDataVo.setTaskInsDataCode(taskInsDataPo.getId());
             }
             return taskDetailDataVo;
         }).collect(Collectors.toList());
