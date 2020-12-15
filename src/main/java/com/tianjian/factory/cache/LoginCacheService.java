@@ -30,6 +30,9 @@ public class LoginCacheService {
 
     public String getUserIdByRequest(HttpServletRequest request) {
         String token = (String) request.getHeader("token");
-        return userToken.getIfPresent(token);
+        if(token != null) {
+            return userToken.getIfPresent(token);
+        }
+        return null;
     }
 }
