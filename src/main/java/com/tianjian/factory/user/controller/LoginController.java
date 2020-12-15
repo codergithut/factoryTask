@@ -144,7 +144,7 @@ public class LoginController {
     }
 
     @PostMapping("/userLogin")
-    @ApiOperation(value = "用户登录", notes = "用户登录", httpMethod = "GET")
+    @ApiOperation(value = "用户登录", notes = "用户登录", httpMethod = "POST")
     public RestModel<UserInfoVo> userLogin(@RequestBody UserInfoVo userInfoVo) {
         if(StringUtils.isEmpty(userInfoVo.getUserName()) || StringUtils.isEmpty(userInfoVo.getPassWord())) {
             return RestModel.fail("用户数据验证失败");
