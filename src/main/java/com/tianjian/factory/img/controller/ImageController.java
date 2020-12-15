@@ -19,6 +19,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/img")
+@CrossOrigin
 public class ImageController {
 
     @Autowired

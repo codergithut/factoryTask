@@ -23,6 +23,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/user")
 @Api("用户管理")
+@CrossOrigin
 public class LoginController {
 
     String secretKey = "11563aa67bfedfa04777176081e240c2";

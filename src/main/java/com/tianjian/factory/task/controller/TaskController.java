@@ -26,6 +26,7 @@ import static com.tianjian.factory.model.common.RestModel.success;
 @RestController
 @Slf4j
 @Api("任务管理类")
+@CrossOrigin
 public class TaskController {
 
     @Autowired
