@@ -37,7 +37,7 @@ public class QiNiuService implements ImageService{
         try {
             bucketManager.createBucket(bucket, "z0");
         } catch (QiniuException e) {
-            e.printStackTrace();
+            System.out.print("hsshsh");
         }
 
 
