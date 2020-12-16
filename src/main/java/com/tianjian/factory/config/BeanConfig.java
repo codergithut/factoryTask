@@ -30,19 +30,19 @@ public class BeanConfig {
     @Value("${app.image.secretKey}")
     private String secretKey;
 
-    @Bean
-    public MinioClient initMinioClient() throws Exception {
-        MinioClient minioClient = new MinioClient(url, port, accessKey,
-                secretKey);
-        // 检查存储桶是否已经存在
-        boolean isExist = false;
-        isExist = minioClient.bucketExists(bucketName);
-        if(isExist) {
-            System.out.println("Bucket already exists.");
-        } else {
-            // 创建一个名为asiatrip的存储桶，用于存储照片的zip文件。
-            minioClient.makeBucket(bucketName);
-        }
-        return  minioClient;
-    }
+//    @Bean
+//    public MinioClient initMinioClient() throws Exception {
+//        MinioClient minioClient = new MinioClient(url, port, accessKey,
+//                secretKey);
+//        // 检查存储桶是否已经存在
+//        boolean isExist = false;
+//        isExist = minioClient.bucketExists(bucketName);
+//        if(isExist) {
+//            System.out.println("Bucket already exists.");
+//        } else {
+//            // 创建一个名为asiatrip的存储桶，用于存储照片的zip文件。
+//            minioClient.makeBucket(bucketName);
+//        }
+//        return  minioClient;
+//    }
 }
