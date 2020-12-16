@@ -1,11 +1,11 @@
 package com.tianjian.factory.img.controller;
 
 import com.tianjian.factory.img.service.ImageService;
+import com.tianjian.factory.img.service.MinioImageServiceImpl;
 import com.tianjian.factory.model.common.RestModel;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.xmlpull.v1.XmlPullParserException;
@@ -38,10 +38,10 @@ public class ImageController {
     }
 
 
-    @ApiOperation(value = "获取图片", notes = "获取图片", httpMethod = "GET")
-    @GetMapping(value = "getImage", produces = MediaType.IMAGE_JPEG_VALUE)
-    public BufferedImage getImage(@RequestParam String fileName) throws IOException,
-            InvalidKeyException, NoSuchAlgorithmException {
-        return ImageIO.read(imageService.getInputStream(fileName));
-    }
+//    @ApiOperation(value = "获取图片", notes = "获取图片", httpMethod = "GET")
+//    @GetMapping(value = "getImage", produces = MediaType.IMAGE_JPEG_VALUE)
+//    public BufferedImage getImage(@RequestParam String fileName) throws IOException,
+//            InvalidKeyException, NoSuchAlgorithmException {
+//        return ImageIO.read(minioImageServiceImpl.getInputStream(fileName));
+//    }
 }
