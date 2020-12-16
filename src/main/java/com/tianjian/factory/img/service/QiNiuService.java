@@ -20,7 +20,7 @@ import java.io.InputStream;
 public class QiNiuService implements ImageService{
 
     @Override
-    public boolean fileUploader(InputStream inputStream, String fileName) throws QiniuException {
+    public boolean fileUploader(InputStream inputStream, String fileName) {
         Zone zone = new Zone.Builder(Zone.zone0()).build();
         Configuration cfg = new Configuration(zone);
         cfg.useHttpsDomains = false;
@@ -32,7 +32,15 @@ public class QiNiuService implements ImageService{
         Auth auth = Auth.create(accessKey, secretKey);
         String upToken = auth.uploadToken(bucket);
         BucketManager bucketManager = new BucketManager(auth, cfg);
-        bucketManager.createBucket(bucket, "z0");
+
+
+        try {
+            bucketManager.createBucket(bucket, "z0");
+        } catch (QiniuException e) {
+            e.printStackTrace();
+        }
+
+
         try {
             Response response = uploadManager.put(inputStream, fileName, upToken, null, null);
             //解析上传成功的结果
