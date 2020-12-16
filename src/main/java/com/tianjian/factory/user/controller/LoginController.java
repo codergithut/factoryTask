@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -109,7 +110,7 @@ public class LoginController {
 
     @GetMapping("/getUserByToken")
     @ApiOperation(value = "根据openid获取用户信息", notes = "根据openid获取用户信息", httpMethod = "GET")
-    public RestModel<UserInfoVo> getUserByToken() {
+    public RestModel<UserInfoVo> getUserByToken(HttpServletResponse response) {
         String id = cacheService.getUserIdByRequest(request);
         if(!StringUtils.isEmpty(id)) {
             UserInfoVo userInfo = userService.getUserInfoById(id);
@@ -117,6 +118,7 @@ public class LoginController {
                 return RestModel.success(userInfo);
             }
         }
+        response.setStatus(401);
         return RestModel.fail("未能获取用户数据");
 
     }
