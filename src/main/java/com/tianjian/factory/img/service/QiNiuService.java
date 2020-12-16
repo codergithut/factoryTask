@@ -21,14 +21,17 @@ public class QiNiuService implements ImageService{
 
     @Override
     public boolean fileUploader(InputStream inputStream, String fileName) {
-        Zone zone = new Zone.Builder(Zone.zone0()).build();
-        Configuration cfg = new Configuration(zone);
-        cfg.useHttpsDomains = false;
-        UploadManager uploadManager = new UploadManager(cfg);
 
         String accessKey = "jxgr_bnMKABzSHlbvycdYibY6_6boF-1ZB_Psi1A";
         String secretKey = "utBczFSyeRtfj8lcP29qDni6kWd4-RD7FUHuHDJu";
         String bucket = "test";
+
+        Zone zone = new Zone.Builder(Zone.zone0()).build();
+        Configuration cfg = new Configuration(zone);
+        cfg.useHttpsDomains = false;
+
+        UploadManager uploadManager = new UploadManager(cfg);
+
         Auth auth = Auth.create(accessKey, secretKey);
         String upToken = auth.uploadToken(bucket);
         BucketManager bucketManager = new BucketManager(auth, cfg);
@@ -38,6 +41,7 @@ public class QiNiuService implements ImageService{
             bucketManager.createBucket(bucket, "z0");
         } catch (QiniuException e) {
             System.out.print("hsshsh");
+            e.printStackTrace();
         }
 
 
