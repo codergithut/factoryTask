@@ -111,9 +111,11 @@ public class LoginController {
     @ApiOperation(value = "根据openid获取用户信息", notes = "根据openid获取用户信息", httpMethod = "GET")
     public RestModel<UserInfoVo> getUserByToken() {
         String id = cacheService.getUserIdByRequest(request);
-        UserInfoVo userInfo = userService.getUserInfoById(id);
-        if(userInfo != null) {
-            return RestModel.success(userInfo);
+        if(!StringUtils.isEmpty(id)) {
+            UserInfoVo userInfo = userService.getUserInfoById(id);
+            if(userInfo != null) {
+                return RestModel.success(userInfo);
+            }
         }
         return RestModel.fail("未能获取用户数据");
 
