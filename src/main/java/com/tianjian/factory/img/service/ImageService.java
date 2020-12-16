@@ -1,5 +1,7 @@
 package com.tianjian.factory.img.service;
 
+import com.qiniu.common.QiniuException;
+
 import java.io.InputStream;
 
 /**
@@ -7,7 +9,7 @@ import java.io.InputStream;
  */
 public interface ImageService {
 
-   boolean fileUploader(InputStream inputStream, String fileName);
+   boolean fileUploader(InputStream inputStream, String fileName) throws QiniuException;
 
    String getImgUrl(String fileName);
 

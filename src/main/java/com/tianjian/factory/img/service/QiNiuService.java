@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
+import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
@@ -19,7 +20,7 @@ import java.io.InputStream;
 public class QiNiuService implements ImageService{
 
     @Override
-    public boolean fileUploader(InputStream inputStream, String fileName) {
+    public boolean fileUploader(InputStream inputStream, String fileName) throws QiniuException {
         Zone zone = new Zone.Builder(Zone.zone0()).build();
         Configuration cfg = new Configuration(zone);
         cfg.useHttpsDomains = false;
@@ -30,6 +31,8 @@ public class QiNiuService implements ImageService{
         String bucket = "test";
         Auth auth = Auth.create(accessKey, secretKey);
         String upToken = auth.uploadToken(bucket);
+        BucketManager bucketManager = new BucketManager(auth, cfg);
+        bucketManager.createBucket(bucket, "z0");
         try {
             Response response = uploadManager.put(inputStream, fileName, upToken, null, null);
             //解析上传成功的结果
