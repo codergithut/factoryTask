@@ -24,7 +24,7 @@ public class QiNiuService implements ImageService{
 
         String accessKey = "jxgr_bnMKABzSHlbvycdYibY6_6boF-1ZB_Psi1A";
         String secretKey = "utBczFSyeRtfj8lcP29qDni6kWd4-RD7FUHuHDJu";
-        String bucket = "test";
+        String bucket = "gongzuoliu";
 
         Zone zone = new Zone.Builder(Zone.zone0()).build();
         Configuration cfg = new Configuration(zone);
