@@ -46,6 +46,6 @@ public class ImageController {
     @GetMapping(value = "getImage")
     public RestModel<String> getImage(@RequestParam String fileName) throws IOException,
             InvalidKeyException, NoSuchAlgorithmException {
-        return RestModel.success("https://" + imgUrl + "/" + fileName);
+        return RestModel.success("http://" + imgUrl + "/" + fileName);
     }
 }
