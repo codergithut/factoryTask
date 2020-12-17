@@ -43,7 +43,7 @@ public class ImageController {
 
 
     @ApiOperation(value = "获取图片", notes = "获取图片", httpMethod = "GET")
-    @GetMapping(value = "getImage", produces = MediaType.IMAGE_JPEG_VALUE)
+    @GetMapping(value = "getImage")
     public RestModel<String> getImage(@RequestParam String fileName) throws IOException,
             InvalidKeyException, NoSuchAlgorithmException {
         return RestModel.success("https://" + imgUrl + "/" + fileName);
