@@ -9,6 +9,8 @@ import com.qiniu.storage.Configuration;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
+import com.tianjian.factory.config.QiNiuUploadManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
@@ -19,34 +21,16 @@ import java.io.InputStream;
 @Service
 public class QiNiuService implements ImageService{
 
+    @Autowired
+    private QiNiuUploadManager qiNiuUploadManager;
+
+
+
     @Override
     public boolean fileUploader(InputStream inputStream, String fileName) {
-
-        String accessKey = "jxgr_bnMKABzSHlbvycdYibY6_6boF-1ZB_Psi1A";
-        String secretKey = "utBczFSyeRtfj8lcP29qDni6kWd4-RD7FUHuHDJu";
-        String bucket = "gongzuoliu";
-
-        Zone zone = new Zone.Builder(Zone.zone0()).build();
-        Configuration cfg = new Configuration(zone);
-        cfg.useHttpsDomains = false;
-
-        UploadManager uploadManager = new UploadManager(cfg);
-
-        Auth auth = Auth.create(accessKey, secretKey);
-        String upToken = auth.uploadToken(bucket);
-        BucketManager bucketManager = new BucketManager(auth, cfg);
-
-
         try {
-            bucketManager.createBucket(bucket, "z0");
-        } catch (QiniuException e) {
-            System.out.print("hsshsh");
-            e.printStackTrace();
-        }
-
-
-        try {
-            Response response = uploadManager.put(inputStream, fileName, upToken, null, null);
+            String upToken = qiNiuUploadManager.getAuthToken();
+            Response response = qiNiuUploadManager.getUploadManager().put(inputStream, fileName, upToken, null, null);
             //解析上传成功的结果
             DefaultPutRet putRet = JSON.parseObject(response.bodyString(), DefaultPutRet.class);
         } catch (QiniuException ex) {

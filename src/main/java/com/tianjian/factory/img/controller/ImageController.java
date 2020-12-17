@@ -5,6 +5,7 @@ import com.tianjian.factory.img.service.MinioImageServiceImpl;
 import com.tianjian.factory.model.common.RestModel;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,11 +38,14 @@ public class ImageController {
         return RestModel.success(fileName + "." + s);
     }
 
+    @Value("${img.url}")
+    private String imgUrl;
 
-//    @ApiOperation(value = "获取图片", notes = "获取图片", httpMethod = "GET")
-//    @GetMapping(value = "getImage", produces = MediaType.IMAGE_JPEG_VALUE)
-//    public BufferedImage getImage(@RequestParam String fileName) throws IOException,
-//            InvalidKeyException, NoSuchAlgorithmException {
-//        return ImageIO.read(minioImageServiceImpl.getInputStream(fileName));
-//    }
+
+    @ApiOperation(value = "获取图片", notes = "获取图片", httpMethod = "GET")
+    @GetMapping(value = "getImage", produces = MediaType.IMAGE_JPEG_VALUE)
+    public RestModel<String> getImage(@RequestParam String fileName) throws IOException,
+            InvalidKeyException, NoSuchAlgorithmException {
+        return RestModel.success("https://" + imgUrl + "/" + fileName);
+    }
 }

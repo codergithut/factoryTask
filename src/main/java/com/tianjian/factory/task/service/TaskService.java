@@ -440,8 +440,14 @@ public class TaskService {
         return true;
     }
 
-    public TaskTemplateVo getMetaById(String taskDetailCode) {
-        WorkTemplateDetailPo workTemplateDetailPo = workTemplateDetailCurd.findById(taskDetailCode).get();
-        return findByTaskTemplateId(workTemplateDetailPo.getTaskTemplateId());
+    public TaskDataVo getMetaById(String taskInsCode) {
+        TaskDataVo taskDataVo = new TaskDataVo();
+        Optional<TaskInsDataPo> taskInsDataPoOpt = taskInsDataCurd.findById(taskInsCode);
+        if(!taskInsDataPoOpt.isPresent()) {
+            return null;
+        }
+        taskDataVo.setTaskTemplateVo(findByTaskTemplateId(taskInsDataPoOpt.get().getTaskTemplateId()));
+        taskDataVo.setData(taskInsDataPoOpt.get().getData());
+        return taskDataVo;
     }
 }
