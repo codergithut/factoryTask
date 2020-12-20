@@ -12,7 +12,7 @@ import java.io.IOException;
 /**
  * Created by tianjian on 2020/12/15.
  */
-@WebFilter(urlPatterns = "/task/*", filterName = "loginFilter")
+@WebFilter(urlPatterns = "/*", filterName = "loginFilter")
 public class LoginFilter implements Filter {
 
     @Autowired
@@ -28,12 +28,28 @@ public class LoginFilter implements Filter {
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        if(loginCacheService.getUserIdByRequest(request) == null) {
+        if(request.getRequestURI().contains("task") && loginCacheService.getUserIdByRequest(request) == null) {
             response.setStatus(401);
             return ;
         }
 
         String origin = request.getHeader("Origin");
+
+        response.addHeader("Access-Control-Allow-Methods", "*");
+        String headers = request.getHeader("Access-Control-Request-Headers");
+        // 支持所有自定义头
+        if (!org.springframework.util.StringUtils.isEmpty(headers)) {
+            response.addHeader("Access-Control-Allow-Headers", headers);
+        }
+        response.addHeader("Access-Control-Max-Age", "3600");
+        // enable cookie
+        response.addHeader("Access-Control-Allow-Credentials", "true");
+
+        //处理options请求
+        if (request.getMethod().toUpperCase().equals("OPTIONS")) {
+            return;
+        }
+
 
         //解决跨域的问题
         response.addHeader("Access-Control-Allow-Origin",origin);
