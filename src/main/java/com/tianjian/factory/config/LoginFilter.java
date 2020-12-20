@@ -35,7 +35,7 @@ public class LoginFilter implements Filter {
 
         String origin = request.getHeader("Origin");
 
-        response.addHeader("Access-Control-Allow-Methods", "http://gongzuoliu.frontjs.top");
+        response.addHeader("Access-Control-Allow-Methods", "*");
         String headers = request.getHeader("Access-Control-Request-Headers");
         // 支持所有自定义头
         if (!org.springframework.util.StringUtils.isEmpty(headers)) {
