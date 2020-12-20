@@ -34,11 +34,11 @@ public class LoginFilter implements Filter {
         }
 
         //解决跨域的问题
-        response.addHeader("Access-Control-Allow-Origin","*");
-        //response.addHeader("Access-Control-Allow-Credentials","true");
-        response.addHeader("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With,X-App-Id, X-Token");
-        response.addHeader("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
-        response.addHeader("Access-Control-Max-Age", "3600");
+//        response.addHeader("Access-Control-Allow-Origin","*");
+//        //response.addHeader("Access-Control-Allow-Credentials","true");
+//        response.addHeader("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With,X-App-Id, X-Token");
+//        response.addHeader("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+//        response.addHeader("Access-Control-Max-Age", "3600");
         filterChain.doFilter(request, servletResponse);
     }
 
