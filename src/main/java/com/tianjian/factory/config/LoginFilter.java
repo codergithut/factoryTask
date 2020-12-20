@@ -44,7 +44,7 @@ public class LoginFilter implements Filter {
         }
 
         System.out.println(request.getRequestURI() + "-----");
-        if(request.getRequestURI().contains("task") && loginCacheService.getUserIdByRequest(request) == null) {
+        if(request.getRequestURI().startsWith("/task") && loginCacheService.getUserIdByRequest(request) == null) {
             response.setStatus(401);
             return ;
         }
