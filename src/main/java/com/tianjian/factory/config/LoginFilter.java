@@ -28,10 +28,10 @@ public class LoginFilter implements Filter {
 
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        if(request.getRequestURI().contains("task") && loginCacheService.getUserIdByRequest(request) == null) {
-            response.setStatus(401);
-            return ;
-        }
+//        if(request.getRequestURI().contains("task") && loginCacheService.getUserIdByRequest(request) == null) {
+//            response.setStatus(401);
+//            return ;
+//        }
         response.addHeader("Access-Control-Allow-Origin", "*");
         String headers = request.getHeader("Access-Control-Request-Headers");
         // 支持所有自定义头
