@@ -32,28 +32,20 @@ public class LoginFilter implements Filter {
             response.setStatus(401);
             return ;
         }
-
-        String origin = request.getHeader("Origin");
-
-        response.addHeader("Access-Control-Allow-Methods", "*");
+        response.addHeader("Access-Control-Allow-Origin", "*");
         String headers = request.getHeader("Access-Control-Request-Headers");
         // 支持所有自定义头
         if (!org.springframework.util.StringUtils.isEmpty(headers)) {
             response.addHeader("Access-Control-Allow-Headers", headers);
         }
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
         response.addHeader("Access-Control-Max-Age", "3600");
-        // enable cookie
-        response.addHeader("Access-Control-Allow-Credentials", "true");
 
         //处理options请求
         if (request.getMethod().toUpperCase().equals("OPTIONS")) {
             return;
         }
 
-
-        //解决跨域的问题
-        response.addHeader("Access-Control-Allow-Origin",origin);
-        System.out.println(origin + "-----------");
         filterChain.doFilter(request, response);
     }
 
