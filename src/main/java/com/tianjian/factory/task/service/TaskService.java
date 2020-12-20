@@ -446,7 +446,11 @@ public class TaskService {
         if(!taskInsDataPoOpt.isPresent()) {
             return null;
         }
-        taskDataVo.setTaskTemplateVo(findByTaskTemplateId(taskInsDataPoOpt.get().getTaskTemplateId()));
+        TaskTemplateVo taskTemplateVo =  findByTaskTemplateId(taskInsDataPoOpt.get().getTaskTemplateId());
+        if(taskTemplateVo != null) {
+            taskDataVo.setTaskTemplateTypeMetaDetails(taskTemplateVo.getTaskTemplateTypeMetaVo()
+                    .getTaskTemplateTypeMetaDetails());
+        }
         taskDataVo.setData(taskInsDataPoOpt.get().getData());
         return taskDataVo;
     }
