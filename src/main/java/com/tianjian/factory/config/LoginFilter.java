@@ -37,6 +37,7 @@ public class LoginFilter implements Filter {
 
         //解决跨域的问题
         response.addHeader("Access-Control-Allow-Origin",origin);
+        System.out.println(origin + "-----------");
         filterChain.doFilter(request, servletResponse);
     }
 
