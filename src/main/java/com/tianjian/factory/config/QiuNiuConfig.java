@@ -29,9 +29,6 @@ public class QiuNiuConfig {
         Configuration cfg = new Configuration(zone);
         cfg.useHttpsDomains = false;
         UploadManager uploadManager = new UploadManager(cfg);
-        Auth auth = Auth.create(accessKey, secretKey);
-        String upToken = auth.uploadToken(bucket);
-        qiNiuUploadManager.setAuth(upToken);
         qiNiuUploadManager.setUploadManager(uploadManager);
         return qiNiuUploadManager;
     }

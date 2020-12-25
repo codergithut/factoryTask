@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 
 /**
  * Created by tianjian on 2020/12/16.
@@ -27,7 +28,7 @@ public class QiNiuService implements ImageService{
 
 
     @Override
-    public boolean fileUploader(InputStream inputStream, String fileName) {
+    public boolean fileUploader(InputStream inputStream, String fileName) throws UnsupportedEncodingException {
         try {
             String upToken = qiNiuUploadManager.getAuthToken();
             Response response = qiNiuUploadManager.getUploadManager().put(inputStream, fileName, upToken, null, null);
