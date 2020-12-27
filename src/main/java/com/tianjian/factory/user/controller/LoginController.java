@@ -167,6 +167,13 @@ public class LoginController {
         return RestModel.success(logUserInfoVo);
     }
 
+    @GetMapping("/loginOut")
+    @ApiOperation(value = "用户退出", notes = "用户退出", httpMethod = "GET")
+    public RestModel logOut(HttpServletRequest request) {
+        userService.cleanUserInfo(request);
+        return RestModel.success();
+    }
+
 
 
 }

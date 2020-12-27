@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -27,7 +29,7 @@ public class UserService {
     private UserInfoDataCurd userInfoDataCurd;
 
     @Autowired
-    private LoginCacheService LoginCacheService;
+    private LoginCacheService loginCacheService;
 
     /**
      * 获取用户信息
@@ -127,7 +129,7 @@ public class UserService {
         UserInfoVo userInfoVo = new UserInfoVo();
         String token = UUID.randomUUID().toString();
         if(userInfoPo != null) {
-            LoginCacheService.addUserToken(token, userInfoPo.getId());
+            loginCacheService.addUserToken(token, userInfoPo.getId());
             BeanUtils.copyProperties(userInfoPo, userInfoVo);
             userInfoVo.setToken(token);
             userInfoVo.setUserId(null);
@@ -141,7 +143,7 @@ public class UserService {
         UserInfoVo userInfoVo = new UserInfoVo();
         String token = UUID.randomUUID().toString();
         if(userInfoPo != null) {
-            LoginCacheService.addUserToken(token, userInfoPo.getId());
+            loginCacheService.addUserToken(token, userInfoPo.getId());
             BeanUtils.copyProperties(userInfoPo, userInfoVo);
             userInfoVo.setToken(token);
             userInfoVo.setUserId(null);
@@ -158,5 +160,9 @@ public class UserService {
             return userInfoVo;
         }
         return null;
+    }
+
+    public void cleanUserInfo(HttpServletRequest request) {
+        loginCacheService.clearToken(request);
     }
 }

@@ -35,4 +35,11 @@ public class LoginCacheService {
         }
         return null;
     }
+
+    public void clearToken(HttpServletRequest request) {
+        String token = (String) request.getHeader("token");
+        String userId = userToken.getIfPresent(token);
+        userToken.invalidate(token);
+        registerTokenInfo.invalidate(userId);
+    }
 }
