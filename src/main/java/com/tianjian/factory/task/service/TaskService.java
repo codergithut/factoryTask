@@ -383,8 +383,8 @@ public class TaskService {
         Integer orderNum = workTemplateDetailPo.getOrderNum();
         WorkInsDataPo workInsDataPo = workInsDataCurd.findByWorkTemplateIdAndWorkStatus
                 (workTemplateDetailPo.getWorkTemplateId(), "active");
-        TaskInsDataPo taskInsDataPo = taskInsDataCurd.findByWorkTemplateIdAndTaskTemplateId
-                (workTemplateDetailPo.getWorkTemplateId(), workTemplateDetailPo.getTaskTemplateId());
+        TaskInsDataPo taskInsDataPo = taskInsDataCurd.findByWorkTemplateIdAndTaskTemplateIdAndTaskStatus
+                (workTemplateDetailPo.getWorkTemplateId(), workTemplateDetailPo.getTaskTemplateId(), "active");
         TaskDetailDataVo taskDetailDataVo = new TaskDetailDataVo();
 
         if(taskInsDataPo != null) {
