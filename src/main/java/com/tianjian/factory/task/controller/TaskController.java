@@ -138,6 +138,9 @@ public class TaskController {
     public RestModel<Boolean> submitWork(@RequestParam("workId") String workId) {
         String userId = loginCacheService.getUserIdByRequest(request);
         UserInfoVo userInfoVo = userService.findByUserId(userId);
+        if(userInfoVo == null) {
+            return RestModel.fail("can not get user info");
+        }
         if("root".equals(userInfoVo.getRole())) {
             boolean result = taskService.bossSubmitWork(workId);
             return result ? success(result) : RestModel.fail( "start work fail");
