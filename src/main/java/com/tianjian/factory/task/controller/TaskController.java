@@ -5,7 +5,9 @@ import com.alibaba.fastjson.JSON;
 import com.tianjian.factory.cache.LoginCacheService;
 import com.tianjian.factory.model.common.RestModel;
 import com.tianjian.factory.model.task.*;
+import com.tianjian.factory.model.user.UserInfoVo;
 import com.tianjian.factory.task.service.TaskService;
+import com.tianjian.factory.user.service.UserService;
 import com.tianjian.factory.util.RequestUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -37,6 +39,9 @@ public class TaskController {
 
     @Autowired
     private LoginCacheService loginCacheService;
+
+    @Autowired
+    private UserService userService;
 
     /**
      * 创建模板元数据
@@ -130,11 +135,19 @@ public class TaskController {
 
     @GetMapping("/submitWork")
     @ApiOperation(value = "提交工作", notes = "提交工作", httpMethod = "GET")
-    public RestModel<Boolean> submitWork(@RequestParam("workTemplateId") String workDetailCode) {
-        boolean result = taskService.workSubmit(workDetailCode);
-        log.info("submitWork param is {}", workDetailCode);
-        return result ? success(result) : RestModel.fail("start work fail");
+    public RestModel<Boolean> submitWork(@RequestParam("workId") String workId) {
+        String userId = loginCacheService.getUserIdByRequest(request);
+        UserInfoVo userInfoVo = userService.findByUserId(userId);
+        if("root".equals(userInfoVo.getRole())) {
+            boolean result = taskService.bossSubmitWork(workId);
+            return result ? success(result) : RestModel.fail( "start work fail");
+        } else {
+            boolean result = taskService.workSubmit(workId);
+            log.info("submitWork param is {}", workId);
+            return result ? success(result) : RestModel.fail("start work fail");
+        }
     }
+
 
     @GetMapping("/bossSubmitWork")
     @ApiOperation(value = "boss提交工作", notes = "boss提交工作", httpMethod = "GET")
