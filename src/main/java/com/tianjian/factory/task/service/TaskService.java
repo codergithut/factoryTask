@@ -415,6 +415,8 @@ public class TaskService {
     public boolean bossSubmitWork(String workDetailTemplateCode) {
         WorkTemplateDetailPo workTemplateDetailPo = workTemplateDetailCurd.findById(workDetailTemplateCode).get();
         if(workTemplateDetailPo != null) {
+            System.out.println(workDetailTemplateCode);
+            System.out.println(workTemplateDetailPo.getWorkTemplateId());
             return workSubmit(workTemplateDetailPo.getWorkTemplateId());
         }
         return false;
