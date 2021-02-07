@@ -267,7 +267,7 @@ public class TaskService {
     }
 
     public List<WorkTemplateVo> getMyWork(String userId) {
-        List<WorkInsDataPo> workInsDataPos = workInsDataCurd.findByHanderUserIdAndWorkStatus(userId, "active");
+        List<WorkInsDataPo> workInsDataPos = workInsDataCurd.findByHanderUserId(userId);
         if(CollectionUtils.isEmpty(workInsDataPos)) {
             return null;
         }
@@ -277,7 +277,7 @@ public class TaskService {
             WorkTemplateVo workTemplateVo = new WorkTemplateVo();
             WorkTemplatePo workTemplatePo = workTemplateCurd.findById(e.getWorkTemplateId()).get();
             BeanUtils.copyProperties(workTemplatePo, workTemplateVo);
-            workTemplateVo.setJobStatus("active");
+            workTemplateVo.setJobStatus(e.getWorkStatus());
             return workTemplateVo;
         }).collect(Collectors.toList());
     }
