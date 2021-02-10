@@ -4,8 +4,10 @@ import com.tianjian.factory.core.model.*;
 import com.tianjian.factory.core.mysql.*;
 import com.tianjian.factory.core.mysql.curd.*;
 import com.tianjian.factory.core.service.WorkFlowDataService;
+import com.tianjian.factory.data.user.UserInfoDataCurd;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -34,6 +36,9 @@ public class WorkFlowDataServiceImpl implements WorkFlowDataService {
     @Autowired
     private ResourceCurd resourceCurd;
 
+    @Autowired
+    private UserInfoCurd userInfoCurd;
+
     @Override
     public boolean updateWorkData(WorkDataDTO workData) {
 
@@ -43,6 +48,7 @@ public class WorkFlowDataServiceImpl implements WorkFlowDataService {
         List<WorkDataDetailEo> workDataDetailEos = workData.getWorkDataDetailDTOS().stream().map(e -> {
             WorkDataDetailEo workDataDetailEo = new WorkDataDetailEo();
             BeanUtils.copyProperties(e, workDataDetailEo);
+            workDataDetailEo.setUserCode(e.getHandleUserInfo().getUserCode());
             return workDataDetailEo;
         }).collect(Collectors.toList());
 
@@ -62,6 +68,7 @@ public class WorkFlowDataServiceImpl implements WorkFlowDataService {
             BeanUtils.copyProperties(e, workDataDetailEo);
             workDataDetailEo.setWorkDataDetailCode(UUID.randomUUID().toString());
             workDataDetailEo.setUserCode(e.getHandleUserInfo().getUserCode());
+            e.setWorkDataDetailCode(workDataDetailEo.getWorkDataDetailCode());
             return workDataDetailEo;
         }).collect(Collectors.toList());
 
@@ -86,6 +93,7 @@ public class WorkFlowDataServiceImpl implements WorkFlowDataService {
         WorkDataEo workDataEo = workDataCurd.findAllByWorkDataCode(workDataCode);
         List<WorkDataDetailEo> workDataDetailEos = workDataDetailCurd.findByWorkDataCode(workDataCode);
         BeanUtils.copyProperties(workDataEo, workDataDTO);
+        workDataDTO.setWorkStatus(workDataEo.getWorkStatus());
         Collections.sort(workDataDetailEos,
                 Comparator.comparingInt(WorkDataDetailEo::getSortNum));
 
@@ -97,6 +105,17 @@ public class WorkFlowDataServiceImpl implements WorkFlowDataService {
 
             ResourceEo resourceEo = resourceCurd.findByWorkDataCodeAndWorkDataDetailCode(workDataCode,
                     dataDetailEo.getWorkDataDetailCode());
+
+            UserInfoDTO userInfoDTO = new UserInfoDTO();
+            userInfoDTO.setUserCode(dataDetailEo.getUserCode());
+            if(!StringUtils.isEmpty(dataDetailEo.getUserCode())) {
+                UserInfoEo userInfoEo = userInfoCurd.findByUserCode(dataDetailEo.getUserCode());
+                if(userInfoEo != null) {
+                    BeanUtils.copyProperties(userInfoEo, userInfoDTO);
+                }
+            }
+
+            workDataDetailDTO.setHandleUserInfo(userInfoDTO);
 
             if(resourceEo != null) {
                 ResourceDTO resourceDTO = new ResourceDTO();

@@ -37,7 +37,7 @@ public class WorkFlowService {
         if(allWorkData.containsKey(workDataCode)) {
             return allWorkData.get(workDataCode);
         }
-        WorkDataDTO workDataDTO = new WorkDataDTO();
+        WorkDataDTO workDataDTO = workFlowDataService.getWorkDataByWorkDataCode(workDataCode);
         allWorkData.put(workDataCode, workDataDTO);
         return workDataDTO;
     }
@@ -151,6 +151,7 @@ public class WorkFlowService {
         WorkDataRecordDTO workDataRecordDTO = createWorkDatRecordDTO(userCode,
                 workDataCode, workDataDetailCode, PASS);
         workFlowDataService.saveWorkOperationRecord(workDataRecordDTO);
+
         return workDataDTO;
     }
 

@@ -19,4 +19,27 @@ public class UserInfoEo {
     //部门编码
     private String departMentCode;
 
+    public String getUserCode() {
+        return userCode;
+    }
+
+    public void setUserCode(String userCode) {
+        this.userCode = userCode;
+    }
+
+    public String getTelePhone() {
+        return telePhone;
+    }
+
+    public void setTelePhone(String telePhone) {
+        this.telePhone = telePhone;
+    }
+
+    public String getDepartMentCode() {
+        return departMentCode;
+    }
+
+    public void setDepartMentCode(String departMentCode) {
+        this.departMentCode = departMentCode;
+    }
 }

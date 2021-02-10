@@ -47,6 +47,14 @@ public class CoreController {
         return RestModel.success(workDataDTO);
     }
 
+    @GetMapping("/passUserWork")
+    public RestModel passWork(@RequestParam("workDataCode") String workDataCode,
+                              @RequestParam("workDataDetailCode") String workDataDetailCode,
+                               @RequestParam("userCode") String userCode) {
+        WorkDataDTO workDataDTO = workFlowService.passWork(workDataCode, workDataDetailCode, userCode);
+        return RestModel.success(workDataDTO);
+    }
+
 
     //96703b16-60a4-47d7-a8a3-9a77b0347be8
 
