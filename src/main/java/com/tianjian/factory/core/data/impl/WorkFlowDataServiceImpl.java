@@ -1,13 +1,11 @@
-package com.tianjian.factory.core.impl;
+package com.tianjian.factory.core.data.impl;
 
 import com.tianjian.factory.core.model.*;
-import com.tianjian.factory.core.mysql.*;
-import com.tianjian.factory.core.mysql.curd.*;
+import com.tianjian.factory.core.data.*;
+import com.tianjian.factory.core.data.curd.*;
 import com.tianjian.factory.core.service.WorkFlowDataService;
-import com.tianjian.factory.data.user.UserInfoDataCurd;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -138,7 +136,7 @@ public class WorkFlowDataServiceImpl implements WorkFlowDataService {
         workDataDTO.setWorkDataDetailDTOS(detailDTOS);
 
         List<WorkDataRecordEo> workDataRecordEos = workDataRecordCurd.findByWorkDataCode(workDataCode);
-        if(CollectionUtils.isEmpty(workDataDetailEos)) {
+        if(!CollectionUtils.isEmpty(workDataDetailEos)) {
             List<WorkDataRecordDTO> workDataRecordDTOS = workDataRecordEos.stream().map(e -> {
                 WorkDataRecordDTO workDataRecordDTO = new WorkDataRecordDTO();
                 BeanUtils.copyProperties(e, workDataRecordDTO);
@@ -205,6 +203,18 @@ public class WorkFlowDataServiceImpl implements WorkFlowDataService {
         }
 
 
+        return true;
+    }
+
+    @Override
+    public boolean saveResourceMetas(List<ResourceMetaDTO> resourceMetaDTOs) {
+        List<ResourceMetaEo> resourceMetaEos = resourceMetaDTOs.stream().map(e -> {
+            ResourceMetaEo resourceMetaEo = new ResourceMetaEo();
+            BeanUtils.copyProperties(e, resourceMetaEo);
+            resourceMetaEo.setResourceMetaCode(UUID.randomUUID().toString());
+            return resourceMetaEo;
+        }).collect(Collectors.toList());
+        resourceMetaCurd.saveAll(resourceMetaEos);
         return true;
     }
 

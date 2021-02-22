@@ -1,4 +1,4 @@
-package com.tianjian.factory.core.mysql;
+package com.tianjian.factory.core.data;
 
 import com.tianjian.factory.core.model.constant.Constraints;
 import com.tianjian.factory.core.model.constant.Metadata;

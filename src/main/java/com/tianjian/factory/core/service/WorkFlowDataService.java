@@ -28,4 +28,6 @@ public interface WorkFlowDataService {
     boolean saveOrUpdateResource(ResourceDTO resourceDTO);
 
     boolean updateResourceMeta(String workDataCode, String workDataDetailCode, List<ResourceMetaDTO> resourceMetaDTOS);
+
+    boolean saveResourceMetas(List<ResourceMetaDTO> resourceMetaDTOs);
 }

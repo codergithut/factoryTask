@@ -1,6 +1,6 @@
-package com.tianjian.factory.core.mysql.curd;
+package com.tianjian.factory.core.data.curd;
 
-import com.tianjian.factory.core.mysql.WorkDataDetailEo;
+import com.tianjian.factory.core.data.WorkDataDetailEo;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;

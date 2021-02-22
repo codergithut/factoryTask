@@ -1,6 +1,6 @@
-package com.tianjian.factory.core.mysql.curd;
+package com.tianjian.factory.core.data.curd;
 
-import com.tianjian.factory.core.mysql.ResourceEo;
+import com.tianjian.factory.core.data.ResourceEo;
 import org.springframework.data.repository.CrudRepository;
 
 /**

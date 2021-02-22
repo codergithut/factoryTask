@@ -1,4 +1,4 @@
-package com.tianjian.factory.core.mysql;
+package com.tianjian.factory.core.data;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

@@ -72,7 +72,7 @@ public class ResourceMetaDTO {
 
     public static List<ResourceMetaDTO> mockResourceMeta(String workDataCode, String workDataDetailCode) {
         List<ResourceMetaDTO> resourceMetaDTOS = new ArrayList<>();
-        for(int i = 0; i < 10; i++) {
+        for(int i = 0; i < 2; i++) {
             ResourceMetaDTO resourceMetaDTO = new ResourceMetaDTO();
             resourceMetaDTO.setConstraints(REQUIRED);
             resourceMetaDTO.setMetadata(STRING);

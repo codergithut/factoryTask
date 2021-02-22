@@ -2,11 +2,12 @@ package com.tianjian.factory.core.service;
 
 import com.tianjian.factory.core.model.*;
 import com.tianjian.factory.core.model.constant.WorkOperator;
-import com.tianjian.factory.core.mysql.ResourceMetaEo;
+import com.tianjian.factory.core.data.ResourceMetaEo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -63,8 +64,7 @@ public class WorkFlowService {
             if(workDataDetailDTO.getWorkDataDetailCode().equals(workDataDetailCode)) {
                 findWorkDetail = true;
                 workDataDetailDTO.setWorkStatus(DOING);
-            }
-            if(findWorkDetail) {
+            } else if(findWorkDetail) {
                 workDataDetailDTO.setWorkStatus(WAITE);
             }
         }
@@ -82,8 +82,10 @@ public class WorkFlowService {
         WorkDataRecordDTO workDataRecordDTO = createWorkDatRecordDTO(userCode,
                 workDataCode, workDataDetailCode, REJECT);
 
+
         workFlowDataService.saveWorkOperationRecord(workDataRecordDTO);
         workFlowDataService.updateWorkData(workDataDTO);
+        workDataDTO.addWorkRecord(workDataRecordDTO);
 
         return workDataDTO;
     }
@@ -105,6 +107,8 @@ public class WorkFlowService {
         WorkDataRecordDTO workDataRecordDTO = createWorkDatRecordDTO(userCode,
                 workDataCode, null, STARTWORK);
         workFlowDataService.saveWorkOperationRecord(workDataRecordDTO);
+        workDataDTO.addWorkRecord(workDataRecordDTO);
+
         return workDataDTO;
     }
 
@@ -121,9 +125,13 @@ public class WorkFlowService {
 
         int findWorkDetail = 0;
 
+        boolean findWorkDetailBoolean = false;
+
         for(int i = 0; i < workDetails.size(); i++) {
             WorkDataDetailDTO workDataDetailDTO = workDetails.get(i);
             if(workDataDetailDTO.getWorkDataDetailCode().equals(workDataDetailCode)) {
+
+                findWorkDetailBoolean = true;
 
                 if(workDataDetailDTO.getWorkStatus() != DOING) {
                     return null;
@@ -139,7 +147,7 @@ public class WorkFlowService {
                 }
             }
 
-            if(i > findWorkDetail + 1) {
+            if(findWorkDetailBoolean && i > findWorkDetail + 1) {
                 workDataDetailDTO.setWorkStatus(WAITE);
             }
         }
@@ -151,6 +159,7 @@ public class WorkFlowService {
         WorkDataRecordDTO workDataRecordDTO = createWorkDatRecordDTO(userCode,
                 workDataCode, workDataDetailCode, PASS);
         workFlowDataService.saveWorkOperationRecord(workDataRecordDTO);
+        workDataDTO.addWorkRecord(workDataRecordDTO);
 
         return workDataDTO;
     }
@@ -182,8 +191,9 @@ public class WorkFlowService {
         workFlowDataService.createWorkData(workDataDTO);
         allWorkData.put(workDataDTO.getWorkDataCode(), workDataDTO);
         addUserWorkDataDTO(userCode, workDataDTO);
-        createWorkDatRecordDTO(userCode, workDataCode, null,
+        WorkDataRecordDTO workDataRecordDTO = createWorkDatRecordDTO(userCode, workDataCode, null,
                 CREATEWORK );
+        workDataDTO.addWorkRecord(workDataRecordDTO);
         return workDataDTO;
     }
 
@@ -196,6 +206,31 @@ public class WorkFlowService {
 
         return allResourceMeta.get(workDataCode + ":" + workDataDetailCode);
 
+    }
+
+    public boolean addResourceMetaDTO(List<ResourceMetaDTO> resourceMetaDTOs) {
+
+        if(CollectionUtils.isEmpty(resourceMetaDTOs)) {
+            return false;
+        }
+
+        String workDataCode = resourceMetaDTOs.get(0).getWorkDataCode();
+        String workDataDetailCode = resourceMetaDTOs.get(0).getWorkDataDetailCode();
+        if(StringUtils.isEmpty(workDataCode) || StringUtils.isEmpty(workDataDetailCode)) {
+            return false;
+        }
+
+        if(resourceMetaDTOs.stream().filter(e -> !workDataCode.equals(e.getWorkDataCode()) ||
+                !workDataDetailCode.equals(e.getWorkDataDetailCode())).findAny().isPresent()) {
+            return false;
+        }
+
+        if(StringUtils.isEmpty(workDataCode) || StringUtils.isEmpty(workDataDetailCode)) {
+            return false;
+        }
+        boolean r = workFlowDataService.saveResourceMetas(resourceMetaDTOs);
+        allResourceMeta.put(workDataCode + ":" + workDataDetailCode, resourceMetaDTOs);
+        return r;
     }
 
     public WorkDataDTO changeResource(String workDataCode, String workDataDetailCode,
@@ -223,7 +258,7 @@ public class WorkFlowService {
         WorkDataRecordDTO workDataRecordDTO = createWorkDatRecordDTO(userCode,
                 workDataCode, workDataDetailCode, CHANGERESOURCE);
         workFlowDataService.saveWorkOperationRecord(workDataRecordDTO);
-
+        workDataDTO.addWorkRecord(workDataRecordDTO);
         workDataDTO.setDataStatus(UPDATE);
         return workDataDTO;
     }
@@ -238,7 +273,6 @@ public class WorkFlowService {
             return resourceMetaEo;
         }).collect(Collectors.toList());
         workFlowDataService.updateResourceMeta(workDataCode, workDataDetailCode, resourceMetaDTOS);
-
         return false;
     }
 
@@ -249,7 +283,7 @@ public class WorkFlowService {
         workDataRecordDTO.setWorkDataCode(workDataCode);
         workDataRecordDTO.setWorkDataDetailCode(workDataDetailCode);
         workDataRecordDTO.setWorkOperator(workOperator);
-        workDataRecordDTO.setWorkDataCode(UUID.randomUUID().toString());
+        workDataRecordDTO.setWorkDataRecordCode(UUID.randomUUID().toString());
         return workDataRecordDTO;
     }
 

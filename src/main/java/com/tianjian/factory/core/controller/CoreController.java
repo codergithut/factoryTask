@@ -4,14 +4,12 @@ import com.alibaba.fastjson.JSON;
 import com.tianjian.factory.core.model.WorkDataDTO;
 import com.tianjian.factory.core.service.WorkFlowService;
 import com.tianjian.factory.model.common.RestModel;
-import com.tianjian.factory.model.task.TaskInsInputDataVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
 
 /**
  * Created by tianjian on 2021/2/9.
@@ -44,6 +42,15 @@ public class CoreController {
     public RestModel startWork(@RequestParam("workDataCode") String workDataCode,
                                @RequestParam("userCode") String userCode) {
         WorkDataDTO workDataDTO = workFlowService.startWork(workDataCode, userCode);
+        return RestModel.success(workDataDTO);
+    }
+
+
+    @GetMapping("/rejectUserWork")
+    public RestModel rejectWork(@RequestParam("workDataCode") String workDataCode,
+                                @RequestParam("workDataDetailCode") String workDataDetailCode,
+                                @RequestParam("userCode") String userCode) {
+        WorkDataDTO workDataDTO = workFlowService.rejectWork(workDataCode, workDataDetailCode, userCode);
         return RestModel.success(workDataDTO);
     }
 
